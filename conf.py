@@ -9,18 +9,22 @@
 #                                   GUI
 #------------------------------------------------------------------------------
 MainMenu_ScreenName						=	'Tanks'
+MainMenu_logo							=	'TANKS'
 MainMenu_BackgroundColor				=	'#ccccff'
-MainMenu_width							=	500
-MainMenu_height							=	450
+MainMenu_width							=	250
+MainMenu_height							=	225
 MainMenu_left							=	400
 MainMenu_top							=	150
 
-start_button_name						=	'Connect'
-exit_button_name						=	'Exit'
-
+MainMenu_radio_text_1					=	'Клиент'
+MainMenu_radio_text_2					=	'Сервер'
+Start_button_name						=	'Продолжить'
+Exit_button_name						=	'Выход'
+Label_host_name							=	'Хост:'
+Label_port_name							=	'Порт:'
 #------------------------------------------------------------------------------
 #                                Connections
 #------------------------------------------------------------------------------
 
-connection_default_ip					=	'127.0.0.1'
-connection_default_port					=	9154
+Connection_default_host					=	'127.0.0.1'
+Connection_default_port					=	9154
