@@ -4,7 +4,7 @@ import sys
 import mainmenu
 
 HELP_MSG = '''
-                          +---------------+
+                          +---------------+                                   .
                           |   T A N K S   |
                           +---------------+
 
@@ -15,7 +15,10 @@ HELP_MSG = '''
 '''
 
 def main(args):
-	mainmenu.MainMenu().run()
+	MM = mainmenu.MainMenu()
+	MM.run()
+	conn = MM.get_result()
+	# conn - connector.Connector()
 	#
 	# to be continued ...
 	#
