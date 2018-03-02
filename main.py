@@ -1,8 +1,8 @@
 #!/usr/bin/env python3.6
 
 import sys
-import mainmenu
-
+from mainmenu import MainMenu
+from screen import Screen
 HELP_MSG = '''
                           +---------------+                                   .
                           |   T A N K S   |
@@ -15,10 +15,23 @@ HELP_MSG = '''
 '''
 
 def main(args):
-	MM = mainmenu.MainMenu()
-	MM.run()
-	conn = MM.get_result()
-	# conn - connector.Connector()
+	conn = 1
+	while conn != None:
+		MM = MainMenu()
+		try:
+			MM.run()
+		except SystemExit:
+			pass
+		conn = MM.get_result()
+		if conn != None:
+			sc = Screen(conn) # conn - connector.Connector()
+			try:
+				sc.run()
+			except SystemExit:
+				pass
+		
+		
+
 	#
 	# to be continued ...
 	#

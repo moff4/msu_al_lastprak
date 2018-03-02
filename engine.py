@@ -1,13 +1,13 @@
 #!/usr/bin/env python3.6
 
 class Engine:
-	def __init__(self):
-		self.__PAUSED = True
-		self.__Tanks	= [] # users' tanks
+	def __init__(self,canvas):
+		self.__canvas = canvas 
+		self.__Tank = [] # users' tanks
 		self.__missles_n_blows= [] # missles and blows
 		self.__threads = []	# threads
-		self.__weights = self.find_seed()
-		self.__pixels = self.generate(weights)
+		self.__weights = self.__find_seed()
+		self.__pixels = self.__generate(self.__weights)
 
 	#
 	# return weights
@@ -22,6 +22,12 @@ class Engine:
 		pass
 
 	#
+	# just return weights and nothing else
+	#
+	def get_weights(self):
+		return self.__weights
+
+	#
 	# get dict with info how to draw obj
 	# and it's current position
 	# and draw it
@@ -32,9 +38,9 @@ class Engine:
 	#
 	# single draw
 	#
-	def __single_draw(self):
+	def single_draw(self):
 		for tank in self.__Tanks:
-			tanks.move() # ???? is that's all
+			tank.move() # ???? is that's all
 
 		i = 0
 		while i < len(self.__missles_n_blows): # each of them missle or blow
@@ -64,20 +70,5 @@ class Engine:
 	#
 	def add_missle_or_blow(self,obj):
 		self.__missles_n_blows.append(obj)
-	#
-	# main loop for render engine
-	#
-	def mainloop(self):
-		delay = 1.0/conf.fps
-		self.__PAUSED = False
-		while not self.__PAUSED:
-			t = Thread(target=self.__single_draw)
-			t.start()
-			self.__threads.append(t)
-			i = 0
-			while i < len(self.__threads):
-				if not self.__threads[i].is_alive():
-					self.__threads.pop(i).join()
-				else:
-					i += 1
-			time.sleep(delay)
+		
+		

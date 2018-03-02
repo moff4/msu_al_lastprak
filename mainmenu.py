@@ -113,7 +113,8 @@ class MainMenu:
 	#
 	def exit_button_click(self,x):
 		self.__result = None
-		self.root.quit()
+		raise SystemExit
+		#self.root.destroy()
 
 	#
 	# run GUI

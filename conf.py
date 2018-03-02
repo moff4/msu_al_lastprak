@@ -8,6 +8,10 @@
 #------------------------------------------------------------------------------
 #                                   GUI
 #------------------------------------------------------------------------------
+####################################################
+###                    MAINMENU                  ###
+####################################################
+
 # Screen name on main menu (str)
 MainMenu_ScreenName						=	'Tanks'
 # Title on main menu (str)
@@ -31,10 +35,23 @@ Exit_button_name						=	'Выход'
 Label_host_name							=	'Хост:'
 # text on label for port textbox on main menu (str) 
 Label_port_name							=	'Порт:'
+
+####################################################
+###                     SCREEN                   ###
+####################################################
 # height of main game window (int)
 Game_window_height						=	480
 # width of main game window (int)
-Game_window_width						=	640
+Game_window_width						=	1280
+# Screen name on main menu (str)
+Screen_ScreenName						=	'Tanks'
+# main background color (str as '#??????')
+Screen_BackgroundColor					=	'#ccccff'
+# window geometry (int,int,int,int)
+Screen_width							=	Game_window_width + 40
+Screen_height							=	Game_window_height + 150
+Screen_left								=	40
+Screen_top								=	50
 #------------------------------------------------------------------------------
 #                                Connections
 #------------------------------------------------------------------------------
@@ -61,7 +78,7 @@ delay_ping								=	5.5
 # frames per seconds (float)
 fps										=	10
 # Pi - math const
-Pi										=	3.141592653589793238
+Pi										=	3.1415
 # G - gravity const from physics
 G 										=	9.81
 
