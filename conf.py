@@ -81,7 +81,9 @@ fps										=	10
 Pi										=	3.1415
 # G - gravity const from physics
 G 										=	9.81
-
+POLYNOMIAL_DEGREE						=	10
+# Game_window_height / COMPRESSION_RATIO = max landscape height
+COMPRESSION_RATIO						=	10
 #------------------------------------------------------------------------------
 #                                 Basic Tank
 #------------------------------------------------------------------------------
