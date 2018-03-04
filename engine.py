@@ -26,7 +26,13 @@ class Engine:
 	#
 	def __find_seed(self):
 		# ANDREY
-		# return [0.01,50*random.random(),50*random.random(), 0.025,30*random.random(),50*random.random(),  0.001,50*random.random(),50*random.random(),]
+		dx	=	800
+		dy	=	[ 30 ,   50,    50,    40,    2  ]
+		w	=	[ 0.029, 0.016 ,0.005, 0.013, 0.25]
+		az = []
+		for i in range(len(w)):
+			az.append([w[i],dy[i]*random.random(),dx*random.random()])
+		return az
 
 		# TIMUR
 		weights = [math.trunc(random.random()*conf.Game_window_height) for i in range(0,conf.Game_window_width,conf.Game_window_width//conf.POLYNOMIAL_DEGREE)]
@@ -37,10 +43,14 @@ class Engine:
 	#
 	def __generate(self,weights):
 		# ANDREY
-		# pix = []
-		# for i in range(conf.Game_window_width):
-		# 	pix.append(40 + int( weights[1] + weights[1] * math.sin(weights[0]*(i + weights[2])) + weights[4] + weights[4] * math.sin(weights[3]*(i + weights[5])) + weights[7] + weights[7] * math.sin(weights[6]*(i + weights[8])) ))
-		# return pix
+		pix = []
+		min_y = 50
+		for i in range(conf.Game_window_width):
+			x = 0.0
+			for j in weights:
+				x += j[1] + j[1] * math.sin(j[0] * (i + j[2]))
+			pix.append(min_y + int(x))
+		return pix
 
 		# TIMUR
 		f = np.poly1d(np.polyfit(range(0,conf.Game_window_width+1,conf.Game_window_width//conf.POLYNOMIAL_DEGREE),weights,conf.POLYNOMIAL_DEGREE))
