@@ -1,18 +1,28 @@
 #!/usr/bin/env python3.6
+import math
 
 import conf
 from basic_missle import Basic_Missle
 
 class Basic_Tank:
-	def __init__(self,engine,x,y,power,angle):
+	def __init__(self,engine,x,y,power=50,angle=None):
 		self.engine = engine
 		self.__X = x
 		self.__Y = y
-		self.__angle = angle
+		if angle = None:
+			self.__angle = -math.pi/4.0
+		else:
+			self.__angle = angle
+			
 		self.__power = power # min , max == 0, 100
 		self.__missle_class = Basic_Missle
 		self.move_counter = 0
 		self.max_step = conf.Basic_tank_max_step
+
+		self.color = conf.Basic_tank_color # color of tank # FIXME
+		self.s = conf.Basic_tank_size / 2.0 # half of size in pixels
+		self.cos_30 = int(math.cos(math.pi/6.0) * self.s)
+		self.sin_30 = int(math.sin(math.pi/6.0) * self.s)
 
 	#########################
 	## ENGINE CONTROLL API ##
@@ -38,10 +48,27 @@ class Basic_Tank:
 
 	#
 	# return dict with info how to draw this object
+	# obj = {
+	#   "line" : [ [x1,y1,x2,y2,border_width,color] , ... ]
+	#	"circle" : [ [x,y,radius,border_width,color] , ... ]
+	#	"rectangle": [ [x1,y1,x2,y2,border_width,color] , ... ]
+	# }
 	#
 	def draw(self):
-		# FIXME
-		return {}
+		a = [ 0 , - self.s ]
+		b = [ self.cos_30 , self.sin_30 ]
+		c = [ -self.cos_30 , self.sin_30 ]
+		dx = int(math.cos(self.__angle) * self.s * 1.5)
+		dy = int(math.sin(self.__angle) * self.s * 1.5)
+		obj = {
+			'lines': [
+				[ a[0],a[1], b[0],b[1] , 2 , self.color ],
+				[ b[0],b[1], c[0],c[1] , 2 , self.color ],
+				[ c[0],c[1], a[0],a[1] , 2 , self.color ],
+				[ 0 , 0  ,  dx , dy    , 3 , '#000000']
+			]
+		}
+		return obj
 
 	#######################
 	## USER CONTROLL API ##

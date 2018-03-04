@@ -77,10 +77,11 @@ delay_ping								=	5.5
 #------------------------------------------------------------------------------
 # frames per seconds (float)
 fps										=	10
-# Pi - math const
+# Pi - math const (float)
 Pi										=	3.1415
-# G - gravity const from physics
+# G - gravity const from physics (float)
 G 										=	9.81
+# for landscape generator
 POLYNOMIAL_DEGREE						=	10
 # Game_window_height / COMPRESSION_RATIO = max landscape height
 COMPRESSION_RATIO						=	10
@@ -89,7 +90,10 @@ COMPRESSION_RATIO						=	10
 #------------------------------------------------------------------------------
 # max tank step for one button press (int)
 Basic_tank_max_step						=	5
-
+# color of the tank (str as "#??????") 
+Basic_tank_color						=	'#FF0000'
+# tank's size in pixels (float)
+Basic_tank_size							=	20
 #------------------------------------------------------------------------------
 #                                 Basic Missle
 #------------------------------------------------------------------------------

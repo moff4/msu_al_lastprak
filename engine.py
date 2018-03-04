@@ -41,6 +41,12 @@ class Engine:
 	# get dict with info how to draw obj
 	# and it's current position
 	# and draw it
+	# UPD: obj = {
+	#   "line" : [ [x1,y1,x2,y2,border_width,color] , ... ]
+	#	"circle" : [ [x,y,radius,border_width,color] , ... ]
+	#	"rectangle": [ [x1,y1,x2,y2,border_width,color] , ... ]
+	# }
+	# DONT FORGET TO CHECK IF KEY IN DICT
 	#
 	def __draw_obj(self,obj,X,Y):
 		pass # FIXME
@@ -50,7 +56,7 @@ class Engine:
 	#
 	def single_draw(self):
 		for tank in self.__Tanks:
-			tank.move() # ???? is that's all
+			tank.move() # ???? is that's all # UPD that's all
 
 		i = 0
 		while i < len(self.__missles_n_blows): # each of them missle or blow
