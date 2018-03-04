@@ -1,5 +1,10 @@
 #!/usr/bin/env python3.6
 
+import conf
+import random
+import math
+import numpy as np
+
 class Engine:
 	def __init__(self,canvas):
 		self.__canvas = canvas 
@@ -13,13 +18,18 @@ class Engine:
 	# return weights
 	#
 	def __find_seed(self):
-		pass
+		weights = [math.trunc(random.random()*conf.Game_window_height) for i in range(0,conf.Game_window_width,conf.Game_window_width//conf.POLYNOMIAL_DEGREE)]
+		return weights + [weights[0]]
 
 	#
 	# return pixels
 	#
 	def __generate(self,weights):
-		pass
+		f = np.poly1d(np.polyfit(range(0,conf.Game_window_width+1,conf.Game_window_width//conf.POLYNOMIAL_DEGREE),weights,conf.POLYNOMIAL_DEGREE))
+		pixels = [f(x) for x in range(conf.Game_window_width)]
+		fmin = min(pixels)
+		fmax = max(pixels)
+		return list(map(lambda x: math.trunc(conf.Game_window_height / conf.COMPRESSION_RATIO * (x-fmin)/(fmax-fmin)), pixels))
 
 	#
 	# just return weights and nothing else
