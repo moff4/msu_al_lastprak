@@ -15,10 +15,20 @@ class Engine:
 		self.__pixels = self.__generate(self.__weights)
 		self.__draw_landscape()
 
+	def f(self):
+		self.clean()
+		self.__weights = self.__find_seed()
+		self.__pixels = self.__generate(self.__weights)
+		self.__draw_landscape()
+
 	#
 	# return weights
 	#
 	def __find_seed(self):
+		# ANDREY
+		# return [0.01,50*random.random(),50*random.random(), 0.025,30*random.random(),50*random.random(),  0.001,50*random.random(),50*random.random(),]
+
+		# TIMUR
 		weights = [math.trunc(random.random()*conf.Game_window_height) for i in range(0,conf.Game_window_width,conf.Game_window_width//conf.POLYNOMIAL_DEGREE)]
 		return weights + [weights[0]]
 
@@ -26,6 +36,13 @@ class Engine:
 	# return pixels
 	#
 	def __generate(self,weights):
+		# ANDREY
+		# pix = []
+		# for i in range(conf.Game_window_width):
+		# 	pix.append(40 + int( weights[1] + weights[1] * math.sin(weights[0]*(i + weights[2])) + weights[4] + weights[4] * math.sin(weights[3]*(i + weights[5])) + weights[7] + weights[7] * math.sin(weights[6]*(i + weights[8])) ))
+		# return pix
+
+		# TIMUR
 		f = np.poly1d(np.polyfit(range(0,conf.Game_window_width+1,conf.Game_window_width//conf.POLYNOMIAL_DEGREE),weights,conf.POLYNOMIAL_DEGREE))
 		pixels = [f(x) for x in range(conf.Game_window_width)]
 		fmin = min(pixels)
@@ -38,7 +55,11 @@ class Engine:
 	def __draw_landscape(self):
 		for i in range(len(self.__pixels)-1):
 			self.__canvas.create_line(i,conf.Game_window_height-self.__pixels[i],i+1,conf.Game_window_height-self.__pixels[i+1])#,fill='green')
-		
+	
+	def clean(self):
+		for i in self.__canvas.find_all():
+			self.__canvas.delete(i)
+
 	#
 	# just return weights and nothing else
 	#

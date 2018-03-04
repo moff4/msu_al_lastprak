@@ -32,7 +32,7 @@ class Screen:
 	#
 	#
 	def run(self):
-		#self.draw_picture() # later must be uncommented
+		self.draw_picture() # later must be uncommented
 		self.root.mainloop()
 
 	#
@@ -40,7 +40,8 @@ class Screen:
 	#
 	def draw_picture(self):
 		self.root.after(self.fps_delay,self.draw_picture)
-		self.engine.single_draw() # maybe need new thread ???? test this later FIXME
+		self.engine.f()
+		#self.engine.single_draw() # maybe need new thread ???? test this later FIXME
 
 if __name__ == '__main__':
 	Screen(None).run()

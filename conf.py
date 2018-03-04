@@ -84,7 +84,7 @@ G 										=	9.81
 # for landscape generator
 POLYNOMIAL_DEGREE						=	10
 # Game_window_height / COMPRESSION_RATIO = max landscape height
-COMPRESSION_RATIO						=	10
+COMPRESSION_RATIO						=	2
 #------------------------------------------------------------------------------
 #                                 Basic Tank
 #------------------------------------------------------------------------------
