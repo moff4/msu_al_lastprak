@@ -13,6 +13,7 @@ class Engine:
 		self.__threads = []	# threads
 		self.__weights = self.__find_seed()
 		self.__pixels = self.__generate(self.__weights)
+		self.__draw_landscape()
 
 	#
 	# return weights
@@ -31,6 +32,9 @@ class Engine:
 		fmax = max(pixels)
 		return list(map(lambda x: math.trunc(conf.Game_window_height / conf.COMPRESSION_RATIO * (x-fmin)/(fmax-fmin)), pixels))
 
+	#
+	# just draw landscape and nothing more
+	#
 	def __draw_landscape(self):
 		for i in range(len(self.__pixels)-1):
 			self.__canvas.create_line(i,conf.Game_window_height-self.__pixels[i],i+1,conf.Game_window_height-self.__pixels[i+1])#,fill='green')
