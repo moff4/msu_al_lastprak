@@ -45,7 +45,7 @@ class MainMenu:
 		exit_button.place(height=21,width=120,x=70,y=190)
 
 		self.Radiobutton_1_click(None) # click on radio button
-		self.__result = None
+		self.__result = None , None
 
 	#
 	# return the result
@@ -104,7 +104,7 @@ class MainMenu:
 					err_msg = 'No connections to port %s'%(port)
 				messagebox.showerror('Error','%s'%err_msg)
 			else:
-				self.__result = conn
+				self.__result = conn , mode
 				self.root.quit()
 		except Exception as e:
 			messagebox.showerror('Error','%s'%e)

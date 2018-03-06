@@ -23,9 +23,9 @@ def main(args):
 			MM.run()
 		except SystemExit:
 			pass
-		conn = MM.get_result()
+		conn , mode = MM.get_result()
 		if conn != None:
-			sc = Screen(conn) # conn - connector.Connector()
+			sc = Screen(conn,mode == 'server') # conn - connector.Connector()
 			try:
 				sc.run()
 			except SystemExit:
