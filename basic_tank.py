@@ -5,7 +5,7 @@ import conf
 from basic_missile import Basic_Missile
 
 class Basic_Tank:
-	def __init__(self,engine,x,y,power=50,angle=None):
+	def __init__(self,engine,x,y,power=50,angle=None,weapons=[Basic_Missile]):
 		self.engine = engine
 		self.__X = x
 		self.__Y = y
@@ -15,14 +15,18 @@ class Basic_Tank:
 			self.__angle = angle
 			
 		self.__power = power # min , max == 0, 100
-		self.__missile_class = Basic_Missile
+		self.__MAX_POWER = 100.0
+		self.__weapons = weapons
+		self.__weapon_counter = 0
 		self.move_counter = 0
 		self.max_step = conf.Basic_tank_max_step
 
-		self.color = conf.Basic_tank_color # color of tank # FIXME
+		self.color = conf.Basic_tank_color # color of tank
 		self.s = conf.Basic_tank_size / 2.0 # half of size in pixels
 		self.cos_30 = int(math.cos(math.pi/6.0) * self.s)
 		self.sin_30 = int(math.sin(math.pi/6.0) * self.s)
+
+		self.rad = math.pi / 180.0
 
 	#########################
 	## ENGINE CONTROLL API ##
@@ -86,16 +90,33 @@ class Basic_Tank:
 	# changes angle , task ::= add | sub (str)
 	#
 	def change_angle(self,task):
-		pass # FIXME
+		if task == 'add':
+			self.__angle += self.rad
+		else:
+			self.__angle -= self.rad
 	
 	#
 	# changes power , task ::= add | sub (str)
 	#
 	def change_power(self,task):
-		pass # FIXME
+		if task == 'add' and self.__power < self.__MAX_POWER:
+			self.__power += 1
+		elif self.__power > 0:
+			self.__power -= 1
+
+	#
+	# changes weapon , task ::= next | prev (str)
+	#
+	def change_weapon(self,task):
+		if task == 'next':
+			self.__weapon_counter += 1
+		else:
+			self.__weapon_counter -=1
+			if self.__weapon_counter < 0:
+				self.__weapon_counter += len(self.__weapons)
 
 	#
 	# FIRE!!!!!!!
 	#
 	def fire(self):
-		self.engine.add_missile_or_blow(self.__missile_class(engine=self.engine,power=self.__power,angle=self.__angle,x=self.__X,y=self.__Y))
+		self.engine.add_missile_or_blow(self.__weapons[self.__weapon_counter%len(self.__weapons)](engine=self.engine,power=self.__power,angle=self.__angle,x=self.__X,y=self.__Y))

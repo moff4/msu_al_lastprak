@@ -4,6 +4,7 @@ import tkinter as tk
 import time
 
 from engine import Engine
+from basic_tank import Basic_Tank
 import user_controller as user_cntl
 import socket_controller as sock_cntl
 import conf
@@ -17,15 +18,23 @@ class Screen:
 		self.root = tk.Tk()
 		self.root.configure(background=conf.Screen_BackgroundColor)
 		self.root.geometry('%sx%s+%s+%s'%(str(conf.Screen_width),str(conf.Screen_height),str(conf.Screen_left),str(conf.Screen_top)))
+		self.left = left
 		self.conn = conn # change on controllers
 		self.fps_delay = int(1000.0/conf.fps)
 		
 		self.canvas = tk.Canvas(self.root, width=conf.Game_window_width, height=conf.Game_window_height,background="#FFFFFF")
 		__cc = int((conf.Screen_width-conf.Game_window_width)/2)
 		self.canvas.place(x=__cc,y=__cc)
-		
+
+		self.engine = Engine(self.canvas)
+		if left:
+			self.connector.send_weight(self.engine.get_weights())
+			self.place_tanks()
+
 		self.user_cntl = None
 		self.sock_cntl = None
+
+		self.go = True
 
 		text= ""
 		avr = 0.0
@@ -47,29 +56,36 @@ class Screen:
 		message = tk.Message(self.root, text=text, background=conf.Screen_BackgroundColor,width=width)
 		left = (conf.Screen_width - width)/2
 		message.place(y = conf.Game_window_height + int(__cc * 1.5),x=left)
-
-		self.engine = Engine(self.canvas)
+	
 	#
-	#
+	# main loop
 	#
 	def run(self):
-		self.draw_picture() # later must be uncommented
+		self.draw_picture()
 		if __name__ != "__main__":
 			self.fork()
 		self.root.mainloop()
 		self.wait()
 
 	#
+	# place tanks
 	#
+	def place_tanks(self,x1=None,x2=None):
+		x1 , x2 = self.engine.place_tanks()
+		self.conn.send_tanks(x1,x2)
+
+
 	#
-	def fork(self):
-		def PUSK(cl,cn):
-			user_cntl(self.conn).loop()
-		
-		self.user_cntl = Thread(target=PUSK,args=[user_cntl,self.conn])
+	# start controller's
+	#
+	def fork(self):		
+		self.user = user_cntl(self.conn,self.left)
+		self.user_cntl = Thread(target=self.user.loop,args=[])
 		self.user_cntl.start()
 		
-		self.sock_cntl,sock_cntl
+		self.sock = sock_cntl(self.conn,not self.left)
+		self.sock_cntl = Thread(target=self.sock.loop,args=[])
+		self.sock_cntl.start()
 
 	#
 	# wait for both threads
@@ -83,14 +99,27 @@ class Screen:
 		except:
 			pass
 
+	#
+	#
+	#
+	def stop_game(self):
+		self.go = False
+		self.sock.stop()
+		self.user.stop()
+		self.engine.clean()
+		self.engine.print_end()
+		self.wait()
 
 	#
-	#
+	# callback from timer to draw picture
 	#
 	def draw_picture(self):
-		self.root.after(self.fps_delay,self.draw_picture)
-		self.engine.f()
-		#self.engine.single_draw() # maybe need new thread ???? test this later FIXME
+		if self.go:
+			self.root.after(self.fps_delay,self.draw_picture)
+			self.engine.f()				# comment before realize	# FIXME
+			#self.engine.single_draw() 	# uncomment before realize 	# FIXME
+			if not self.engine.check_game():
+				self.stop_game()
 
 if __name__ == '__main__':
 	Screen(None).run()

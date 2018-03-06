@@ -1,15 +1,20 @@
 #!/usr/bin/env python3.5
-
+import time
 import json
-import sys,tty,termios
+import keyboard
 
 import controller
 
 class User_Controller(controller.Controller):
-	def __init__(self,conn):
-		super(controller.Controller, self).__init__()
+	def __init__(self,conn,engine,left=True):
+		super(controller.Controller, self).__init__(engine)
+		self.engine = engine
 		self.conn = conn # connector.Connector
-
+		if left:
+			self.left = "left"
+		else:
+			self.left = "right"
+		self.go = True
 	#
 	# command to run & send to peer
 	#
@@ -20,45 +25,67 @@ class User_Controller(controller.Controller):
 	#
 	# button reactions
 	#
+	def press(self,event):
+		if event.event_type == "down" and self.go:
+			boo = True
+			#print("%s , %s, %s , %s , %s ."%(event.event_type,event.name,event.scan_code,type(event.scan_code),event.time))
+			obj = {
+				"tank" = self.left
+			}
+			# obj = {
+			#	"tank" = "left" | "right"
+			#	"cmd" = "move" | "power" | "angle" | "fire"
+			#	"arg" = smth (or nothing) that depends on cmd
+			# }
+			if event.name.lower() == 'a': # angle up 
+				obj['cmd'] = "angle"
+				obj['arg'] = 'add'
+			elif event.name.lower() == 'd': # angle down
+				obj['cmd'] = "angle"
+				obj['arg'] = 'sub'
+			elif event.name.lower() == 'w': # power up
+				obj['cmd'] = "power"
+				obj['arg'] = 'add'
+			elif event.name.lower() == 's': # power down
+				obj['cmd'] = "power"
+				obj['arg'] = 'sub'
+			elif event.name.lower() == 'q': # next weapon
+				obj['cmd'] = "weapon"
+				obj['arg'] = 'next'
+			elif event.name.lower() == 'e': # previous weapon
+				obj['cmd'] = "weapon"
+				obj['arg'] = 'prev'
+			elif event.name == 'space': # fire 
+				obj['cmd'] = "fire"
+				obj['arg'] = ''
+			elif event.name in ['left','right']: # move
+				obj['cmd'] = "move"
+				obj['arg'] = event.name 
+			else:
+				boo = False
+			if boo:
+				self.command(obj)
+
+	#
+	# set stop flag
+	#
+	def stop(self):
+		self.go = False
 
 	#
 	# just loop
 	#
 	def loop(self):
-		pass
+		keyboard.hook(self.press)
+		self.go = True
+		while self.go:
+			time.sleep(1)
 
 
-class _Getch:
-	def __call__(self):
-			fd = sys.stdin.fileno()
-			old_settings = termios.tcgetattr(fd)
-			try:
-				tty.setraw(sys.stdin.fileno())
-				ch = sys.stdin.read(3)
-			finally:
-				termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
-			return ch
 
-def get():
-	inkey = _Getch()
-	while(1):
-		k=inkey()
-		if k!='':
-			break
-		if k=='\x1b[A':
-			print("up")
-		elif k=='\x1b[B':
-			print("down")
-		elif k=='\x1b[C':
-			print("right")
-		elif k=='\x1b[D':
-			print("left")
-		else:
-			print("not an arrow key!")
 
 def main():
-	for i in range(0,20):
-		get()
+	User_Controller(None).loop()
 
 if __name__=='__main__':
 	main()

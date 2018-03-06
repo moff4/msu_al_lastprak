@@ -75,7 +75,7 @@ Screen_right_pos						=	"правым"
 Connection_default_host					=	'127.0.0.1'
 # default port to advice user (int)
 Connection_default_port					=	9154
-# timeout in seconds of waitng for peer (float ot None)
+# timeout in seconds of waitng for peer (float or None)
 Socket_listen_timeout					=	15
 
 #------------------------------------------------------------------------------
@@ -86,7 +86,7 @@ PING_MSG								=	b'msg-ping'
 # message for closing connection (bytes)
 CLOSE_MSG								=	b'msg-close'
 # delay in seconds between ping requests and replies (float)
-delay_ping								=	5.5
+delay_ping								=	3.5
 
 #------------------------------------------------------------------------------
 #                                   Engine

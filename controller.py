@@ -1,8 +1,8 @@
 #!/usr/bin/env python3.6
 
 class Controller:
-	def __init__(self,engin):
-		self.engin = engin
+	def __init__(self,engine):
+		self.engine = engine
 
 	#
 	# dick = {
@@ -15,12 +15,14 @@ class Controller:
 		index = int(dick["tank"] == "right") # 0 - left , right - 1
 		cmd = dick["cmd"]
 		if  cmd  == "move":
-			self.engin.Tank[index].promise_move(dick["arg"])
+			self.engine.Tank[index].promise_move(dick["arg"])
 		elif cmd == "power":
-			self.engin.Tank[index].change_angle(dick["arg"])
+			self.engine.Tank[index].change_angle(dick["arg"])
 		elif cmd == "angle":
-			self.engin.Tank[index].change_power(dick["arg"])
+			self.engine.Tank[index].change_power(dick["arg"])
+		elif cmd == "weapon":
+			self.engine.Tank[index].change_weapon(dick["arg"])
 		elif cmd == "fire":
-			self.engin.Tank[index].fire()
+			self.engine.Tank[index].fire()
 		else:
 			pass

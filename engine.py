@@ -8,7 +8,8 @@ import numpy as np
 class Engine:
 	def __init__(self,canvas):
 		self.__canvas = canvas 
-		self.Tank = [] # users' tanks # LEFT TANK MUST BE 0 , RIGHT TANK MUST BE 1
+		self.Tank = [None,None] # users' tanks # LEFT TANK MUST BE 0 , RIGHT TANK MUST BE 1
+		self.SCORE = [None,None]
 		self.__missiles_n_blows= [] # missiles and blows
 		self.__threads = []	# threads
 		self.__internal_timer = 0 # count already drawen frames
@@ -76,11 +77,21 @@ class Engine:
 		pass # FIXME
 	
 	#
+	# print on canvas, that game is over and smbd won or game is over
+	#
+	def print_end(self):
+		pass # FIXME
+
+	#
+	# return False if any user got score >= max score
+	#
+	def check_game(self):
+		return True # FIXME
+
+	#
 	# delete all objects from canvas
 	#
 	def clean(self):
-		#map(self.__canvas.delete,self.__canvas.find_all()) # new ; maybe faster
-		
 		for i in self.__canvas.find_all(): # old but tested
 			self.__canvas.delete(i)
 
@@ -90,6 +101,12 @@ class Engine:
 	def get_weights(self):
 		return self.__weights
 
+	#
+	# just set new weights and nothing else
+	#
+	def set_weights(self,weights):
+		self.__weights = weights
+		self.__pixels = self.__generate(self.__weights)
 	#
 	# get dict with info how to draw obj
 	# and it's current position
@@ -141,4 +158,25 @@ class Engine:
 	def add_missile_or_blow(self,obj):
 		self.__missiles_n_blows.append(obj)
 		
-		
+	#
+	# add's new tank
+	#
+	def add_tank(self,tank,pos):
+		i = int(pos != 'left')
+		self.Tank[i] 	= tank
+		self.SCORE[i]	= 0.0
+
+	#
+	# place tanks
+	#
+	def place_tanks(self,x1=None,x2=None):
+		if x1 == None and x2 == None:
+			z = (float(conf.Game_window_width) / 4.0)
+			x1 = z + (random.rand() * z - z/2.0)
+			x2 = z - (random.rand() * z - z/2.0)
+		tank1 = Basic_Tank(x,self.engine.get_pixel(x),angle=conf.Pi/4)
+		tank2 = Basic_Tank(x,self.engine.get_pixel(x),angle=3*conf.Pi/4)
+		self.add_tank(tank1,"left")
+		self.add_tank(tank2,"right")
+		#self.conn.send_tanks(x1,x2)
+		return x1,x2

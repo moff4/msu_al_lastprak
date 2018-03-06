@@ -1,5 +1,6 @@
 #!/usr/bin/env python3.6
 
+import json
 import socket
 import binascii as asc
 from threading import Thread
@@ -25,13 +26,14 @@ class Connector:
 			sock.bind(('',self.port))
 			sock.listen(1)
 			sock.settimeout(conf.Socket_listen_timeout)
-			sock , addr = sock.accept()
+			conn , addr = sock.accept()
+			conn.settimeout(conf.Socket_listen_timeout)
 		else:
 			raise RuntimeError('Invalid mode')
-		self.send_ping(sock)
-		if not self.get_ping(sock):
+		self.send_ping(conn)
+		if not self.get_ping(conn):
 			raise RuntimeError('Handshake missed')
-		self.__socket = sock
+		self.__socket = conn
 
 	#
 	# return True if there are opened socket 
@@ -133,6 +135,18 @@ class Connector:
 		except Exception as e:
 			print('ERROR: send into socket: %s')
 			return False
+
+	#
+	# send weight's to peer
+	#
+	def send_weight(self,weights):
+		self.write_msg(json.dumps({'weights':weights}))
+
+	#
+	# send tanks' coordinates to peer
+	#
+	def send_tanks(self,left_x,right_x):
+		self.write_msg(json.dumps({'left_x':left_x,'right_x':right_x}))		
 
 if __name__ == '__main__':
 	Flag = True
