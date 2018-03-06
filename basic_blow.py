@@ -23,7 +23,7 @@ class Basic_Blow:
 	#
 	# move missle for next dx,dy
 	#
-	def next(self):
+	def next(self,_timer=0):
 		self.__r += 1
 	#
 	# return True if method "next" is over
@@ -34,8 +34,9 @@ class Basic_Blow:
 	#
 	# destroy itself and create extra blow or missle objects in case of need
 	#
-	def reroze(self):
+	def reroze(self,_timer=0):
 		self.engine.blow_landscape(self.__X,self.__max_r)
+		# damage smbd's tank
 		pass # normal
 
 	#

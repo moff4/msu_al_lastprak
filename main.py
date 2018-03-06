@@ -3,6 +3,7 @@
 import sys
 from mainmenu import MainMenu
 from screen import Screen
+
 HELP_MSG = '''
                           +---------------+                                   .
                           |   T A N K S   |
@@ -29,8 +30,6 @@ def main(args):
 				sc.run()
 			except SystemExit:
 				pass
-		
-		
 
 	#
 	# to be continued ...

@@ -8,9 +8,10 @@ import numpy as np
 class Engine:
 	def __init__(self,canvas):
 		self.__canvas = canvas 
-		self.__Tank = [] # users' tanks
+		self.Tank = [] # users' tanks # LEFT TANK MUST BE 0 , RIGHT TANK MUST BE 1
 		self.__missiles_n_blows= [] # missiles and blows
 		self.__threads = []	# threads
+		self.__internal_timer = 0 # count already drawen frames
 		self.__weights = self.__find_seed()
 		self.__pixels = self.__generate(self.__weights)
 		self.__draw_landscape()
@@ -78,10 +79,10 @@ class Engine:
 	# delete all objects from canvas
 	#
 	def clean(self):
-		map(self.__canvas.delete,self.__canvas.find_all()) # new ; maybe faster
+		#map(self.__canvas.delete,self.__canvas.find_all()) # new ; maybe faster
 		
-		# for i in self.__canvas.find_all(): # old but tested
-		# 	self.__canvas.delete(i)
+		for i in self.__canvas.find_all(): # old but tested
+			self.__canvas.delete(i)
 
 	#
 	# just return weights and nothing else
@@ -107,22 +108,23 @@ class Engine:
 	# single draw
 	#
 	def single_draw(self):
-		for tank in self.__Tanks:
-			tank.move() # ???? is that's all # UPD that's all
+		for tank in self.Tanks:
+			tank.move() # that's all
 
 		i = 0
 		while i < len(self.__missiles_n_blows): # each of them missile or blow
-			self.__missiles_n_blows[i].next()
+			self.__missiles_n_blows[i].next(self.__internal_timer)
 			if self.__missiles_n_blows[i].done():
-				self.__missiles_n_blows[i].reroze()
+				self.__missiles_n_blows[i].reroze(self.__internal_timer)
 				self.__missiles_n_blows.pop(i)
 			else:
 				i+=1
 
-		for i in (self.__Tanks + self.__missiles_n_blows):
+		for i in (self.Tanks + self.__missiles_n_blows):
 			obj = i.draw(),
 			x,y = i.getXY()
 			self.__draw_obj(obj,x,y)
+		self.__internal_timer += 1
 
 	#
 	# return landscape Y for current x

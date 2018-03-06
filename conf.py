@@ -4,6 +4,8 @@
 # U can change some values on ur own risk
 #------------------------------------------------------------------------------
 
+# max value of points user can get in one play
+MAX_SCORE 	=	1000.0
 
 #------------------------------------------------------------------------------
 #                                   GUI
@@ -52,6 +54,20 @@ Screen_width							=	Game_window_width + 40
 Screen_height							=	Game_window_height + 150
 Screen_left								=	40
 Screen_top								=	50
+# help message displayed on form (list of str)
+Screen_help_msg = ["Ты управляешь <LEFT-OR-RIGHT> танком. Атакуй противника, чтобы набрать очки. \
+Победит первый, кто наберет %s очков. "%(MAX_SCORE),
+"Управление:",
+"<- , -> - подвинуть танк влево/вправо",
+" A , D  - увеличить, уменьшить угол наклона орудия",
+" W , S  - увеличить, уменьшить мощность выстрела",
+" Q , E  - Сменить снаряд",
+" ПРОБЕЛ - выстрелить"
+]
+# str for left tank insterted in help-msg (str)
+Screen_left_pos							=	"левым"
+# str for rigth tank insterted in help-msg (str)
+Screen_right_pos						=	"правым"
 #------------------------------------------------------------------------------
 #                                Connections
 #------------------------------------------------------------------------------

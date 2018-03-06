@@ -32,7 +32,7 @@ class Basic_Missile:
 	#
 	# move missle for next dx,dy
 	#
-	def next(self):
+	def next(self,_timer=0):
 		if len(self.__traceback) >= self.__traceback_length:
 			self.__traceback[:(self.__traceback_length - 1)]
 		self.__traceback_length = ([self.__X,self.__Y]) + self.__traceback
@@ -53,7 +53,7 @@ class Basic_Missile:
 	#
 	# destroy itself and create extra blow or missle objects in case of need
 	#
-	def reroze(self):
+	def reroze(self,_timer=0):
 		self.engine.add_missle_or_blow(self.__blow_class(engine=self.engine,x=self.__X,y=self.engine.get_pixel(self.__X)))
 
 	#
