@@ -2,7 +2,7 @@
 import math
 
 import conf
-from basic_missle import Basic_Missle
+from basic_missile import Basic_Missile
 
 class Basic_Tank:
 	def __init__(self,engine,x,y,power=50,angle=None):
@@ -15,7 +15,7 @@ class Basic_Tank:
 			self.__angle = angle
 			
 		self.__power = power # min , max == 0, 100
-		self.__missle_class = Basic_Missle
+		self.__missile_class = Basic_Missile
 		self.move_counter = 0
 		self.max_step = conf.Basic_tank_max_step
 
@@ -98,4 +98,4 @@ class Basic_Tank:
 	# FIRE!!!!!!!
 	#
 	def fire(self):
-		self.engine.add_missle_or_blow(self.__missle_class(engine=self.engine,power=self.__power,angle=self.__angle,x=self.__X,y=self.__Y))
+		self.engine.add_missile_or_blow(self.__missile_class(engine=self.engine,power=self.__power,angle=self.__angle,x=self.__X,y=self.__Y))

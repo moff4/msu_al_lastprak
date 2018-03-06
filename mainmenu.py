@@ -8,7 +8,8 @@ from connector import Connector
 
 class MainMenu:
 	def __init__(self):
-		self.root = tk.Tk(screenName=cfg.MainMenu_ScreenName)
+		#self.root = tk.Tk(screenName=cfg.MainMenu_ScreenName)
+		self.root = tk.Tk()
 		self.root.configure(background=cfg.MainMenu_BackgroundColor)
 		self.root.geometry('%sx%s+%s+%s'%(str(cfg.MainMenu_width),str(cfg.MainMenu_height),str(cfg.MainMenu_left),str(cfg.MainMenu_top)))
 		

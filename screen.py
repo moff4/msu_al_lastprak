@@ -11,14 +11,14 @@ import conf
 #
 class Screen:
 	def __init__(self,conn):
-		self.root = tk.Tk(screenName=conf.Screen_ScreenName)
+		# self.root = tk.Tk(screenName=conf.Screen_ScreenName)
+		self.root = tk.Tk()
 		self.root.configure(background=conf.Screen_BackgroundColor)
 		self.root.geometry('%sx%s+%s+%s'%(str(conf.Screen_width),str(conf.Screen_height),str(conf.Screen_left),str(conf.Screen_top)))
-		#self.connector = conn # change on controllers
+		#self.connector = conn # change on controllers # FIXME
 		self.fps_delay = int(1000.0/conf.fps)
 		
 		self.canvas = tk.Canvas(self.root, width=conf.Game_window_width, height=conf.Game_window_height)
-		#self.canvas.pack()
 		__cc = int((conf.Screen_width-conf.Game_window_width)/2)
 		self.canvas.place(x=__cc,y=__cc)
 		

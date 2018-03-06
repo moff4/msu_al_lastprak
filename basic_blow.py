@@ -7,6 +7,10 @@ class Basic_Blow:
 		self.engine = engine
 		self.__X = x
 		self.__Y = y
+		self.__r = 0
+		self.__max_r = int(conf.Blow_max_size/2)
+		self.__color = Blow_color
+		self.__wave_width = Blow_width
 
 	#########################
 	## ENGINE CONTROLL API ##
@@ -20,22 +24,30 @@ class Basic_Blow:
 	# move missle for next dx,dy
 	#
 	def next(self):
-		pass # FIXME
+		self.__r += 1
 	#
 	# return True if method "next" is over
 	# or False
 	#
 	def done(self):
-		pass # FIXME
+		return self.__r >= self.__max_r
 	#
 	# destroy itself and create extra blow or missle objects in case of need
 	#
 	def reroze(self):
+		self.engine.blow_landscape(self.__X,self.__max_r)
 		pass # normal
 
 	#
 	# return dict with info how to draw this object
+	# UPD: obj = {
+	#   "line" : [ [x1,y1,x2,y2,border_width,color] , ... ]
+	#	"circle" : [ [x,y,radius,border_width,color] , ... ]
+	#	"rectangle": [ [x1,y1,x2,y2,border_width,color] , ... ]
+	# }
 	#
 	def draw(self):
-		# FIXME
-		return {}
+		obj = {
+			"circle":[0,0,self.__r,self.__wave_width,self.__color]
+		}
+		return obj

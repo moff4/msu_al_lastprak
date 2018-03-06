@@ -91,14 +91,28 @@ COMPRESSION_RATIO						=	2
 # max tank step for one button press (int)
 Basic_tank_max_step						=	5
 # color of the tank (str as "#??????") 
-Basic_tank_color						=	'#FF0000'
+Basic_tank_color						=	'#00FF00'
 # tank's size in pixels (float)
 Basic_tank_size							=	20
 #------------------------------------------------------------------------------
-#                                 Basic Missle
+#                                Basic Misslie
 #------------------------------------------------------------------------------
 # Weight for speed of missle; the bigger weight - the bigger speed (float)
-Missle_speed_weight						=	1.0
-
-
-
+Missile_speed_weight					=	1.0
+# length of missile traceback (int)
+Missile_trace_length					=	5
+# size of misslie in pixels (int)
+Misslie_size							=	8
+# color of the missile (str as "#??????")
+Misslie_main_color						=	"#0000FF"
+# color of the missile's trace (str as "#??????")
+Misslie_trace_color						=	"#FF0000"
+#------------------------------------------------------------------------------
+#                                Basic Blow
+#------------------------------------------------------------------------------
+# max size of the blow in pixels (int)
+Blow_max_size							=	30
+# color of the blow's wave (str as "#??????")
+Blow_color								=	"#FF0000"
+# width of the blow's wave in pixels (int)
+Blow_width								=	5

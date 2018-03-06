@@ -9,7 +9,7 @@ class Engine:
 	def __init__(self,canvas):
 		self.__canvas = canvas 
 		self.__Tank = [] # users' tanks
-		self.__missles_n_blows= [] # missles and blows
+		self.__missiles_n_blows= [] # missiles and blows
 		self.__threads = []	# threads
 		self.__weights = self.__find_seed()
 		self.__pixels = self.__generate(self.__weights)
@@ -66,9 +66,22 @@ class Engine:
 		for i in range(len(self.__pixels)-1):
 			self.__canvas.create_line(i,conf.Game_window_height-self.__pixels[i],i+1,conf.Game_window_height-self.__pixels[i+1])#,fill='green')
 	
+	
+	#
+	# u know X, u can get Y
+	# u should create explosion funnel in (X,Y) with radius R
+	#
+	def blow_landscape(self,X,R):
+		pass # FIXME
+	
+	#
+	# delete all objects from canvas
+	#
 	def clean(self):
-		for i in self.__canvas.find_all():
-			self.__canvas.delete(i)
+		map(self.__canvas.delete,self.__canvas.find_all()) # new ; maybe faster
+		
+		# for i in self.__canvas.find_all(): # old but tested
+		# 	self.__canvas.delete(i)
 
 	#
 	# just return weights and nothing else
@@ -98,15 +111,15 @@ class Engine:
 			tank.move() # ???? is that's all # UPD that's all
 
 		i = 0
-		while i < len(self.__missles_n_blows): # each of them missle or blow
-			self.__missles_n_blows[i].next()
-			if self.__missles_n_blows[i].done():
-				self.__missles_n_blows[i].reroze()
-				self.__missles_n_blows.pop(i)
+		while i < len(self.__missiles_n_blows): # each of them missile or blow
+			self.__missiles_n_blows[i].next()
+			if self.__missiles_n_blows[i].done():
+				self.__missiles_n_blows[i].reroze()
+				self.__missiles_n_blows.pop(i)
 			else:
 				i+=1
 
-		for i in (self.__Tanks + self.__missles_n_blows):
+		for i in (self.__Tanks + self.__missiles_n_blows):
 			obj = i.draw(),
 			x,y = i.getXY()
 			self.__draw_obj(obj,x,y)
@@ -121,9 +134,9 @@ class Engine:
 			return None
 
 	#
-	# add new missle or blow
+	# add new missile or blow
 	#
-	def add_missle_or_blow(self,obj):
-		self.__missles_n_blows.append(obj)
+	def add_missile_or_blow(self,obj):
+		self.__missiles_n_blows.append(obj)
 		
 		
