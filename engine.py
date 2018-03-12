@@ -142,12 +142,15 @@ class Engine:
 	# DONT FORGET TO CHECK IF KEY IN DICT
 	#
 	def __draw_obj(self,obj,X,Y):
-		for l in elementary.pop('line'):#exception
-			self.canvas.create_line(l[0] + X,l[1] + Y,l[2] + X,l[3] + Y,width = l[4],fill =l[5])
-		for l in elementary.pop('circle'):#exception
-			self.canvas.create_oval(l[0]-l[2] + X,l[1]-l[2] + Y,l[0]+l[2] + X,l[1]+l[2] + Y,width = l[3],fill =l[4])
-		for l in elementary.pop('rectangle'):#exception
-			self.canvas.create_rectangle(l[0] + X,l[1] + Y,l[2] + X,l[3] + Y,width = l[4],fill =l[5])		
+		if 'line' in obj:		
+			for l in obj.pop('line'):
+				self.canvas.create_line(l[0] + X,l[1] + Y,l[2] + X,l[3] + Y,width = l[4],fill =l[5])
+		if 'circle' in obj:	
+			for l in obj.pop('circle'):
+				self.canvas.create_oval(l[0]-l[2] + X,l[1]-l[2] + Y,l[0]+l[2] + X,l[1]+l[2] + Y,width = l[3],fill =l[4])
+		if 'rectangle' in obj:	
+			for l in obj.pop('rectangle'):
+				self.canvas.create_rectangle(l[0] + X,l[1] + Y,l[2] + X,l[3] + Y,width = l[4],fill =l[5])		
 #		pass # FIXME
 
 	#
