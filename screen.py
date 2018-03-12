@@ -5,9 +5,10 @@ import time
 
 from engine import Engine
 from basic_tank import Basic_Tank
-import user_controller as user_cntl
-import socket_controller as sock_cntl
+from user_controller import User_Controller as user_cntl
+from socket_controller import Socket_Controller as sock_cntl
 import conf
+from threading import Thread
 
 #
 # Screen with main picturebox
@@ -28,7 +29,7 @@ class Screen:
 
 		self.engine = Engine(self.canvas)
 		if left:
-			self.connector.send_weight(self.engine.get_weights())
+			self.conn.send_weight(self.engine.get_weights())#self.connector.send_weight(self.engine.get_weights())
 			self.place_tanks()
 
 		self.user_cntl = None
@@ -116,8 +117,8 @@ class Screen:
 	def draw_picture(self):
 		if self.go:
 			self.root.after(self.fps_delay,self.draw_picture)
-			self.engine.f()				# comment before realize	# FIXME
-			#self.engine.single_draw() 	# uncomment before realize 	# FIXME
+			#self.engine.f()				# comment before realize	# FIXME
+			self.engine.single_draw() 	# uncomment before realize 	# FIXME
 			if not self.engine.check_game():
 				self.stop_game()
 

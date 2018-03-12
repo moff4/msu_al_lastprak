@@ -3,6 +3,7 @@
 import tkinter as tk
 from tkinter import messagebox
 import conf as cfg
+import traceback
 
 from connector import Connector
 
@@ -107,6 +108,7 @@ class MainMenu:
 				self.__result = conn , mode
 				self.root.quit()
 		except Exception as e:
+			e = traceback.format_exc()
 			messagebox.showerror('Error','%s'%e)
 
 	#

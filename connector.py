@@ -19,21 +19,22 @@ class Connector:
 	# connect to peer
 	#
 	def connect(self):
-		sock = socket.socket()
 		if self.mode == 'client':
+			sock = socket.socket()
 			sock.connect((self.host,self.port))
 		elif self.mode == 'server':
+			sock = socket.socket()
 			sock.bind(('',self.port))
 			sock.listen(1)
 			sock.settimeout(conf.Socket_listen_timeout)
-			conn , addr = sock.accept()
-			conn.settimeout(conf.Socket_listen_timeout)
+			sock , addr = sock.accept()
+			sock.settimeout(conf.Socket_listen_timeout)#conn.settimeout(conf.Socket_listen_timeout)
 		else:
 			raise RuntimeError('Invalid mode')
-		self.send_ping(conn)
-		if not self.get_ping(conn):
+		self.send_ping(sock)
+		if not self.get_ping(sock):
 			raise RuntimeError('Handshake missed')
-		self.__socket = conn
+		self.__socket = sock
 
 	#
 	# return True if there are opened socket 

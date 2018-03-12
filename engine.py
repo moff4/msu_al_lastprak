@@ -5,6 +5,11 @@ import random
 import math
 import numpy as np
 
+from basic_tank import Basic_Tank
+
+from scipy.interpolate import interp1d
+from scipy import interpolate
+
 class Engine:
 	def __init__(self,canvas):
 		self.__canvas = canvas 
@@ -28,6 +33,7 @@ class Engine:
 	#
 	def __find_seed(self):
 		# ANDREY
+		"""
 		dx	=	800
 		dy	=	[ 30 ,   50,    50,    40,    2  ]
 		w	=	[ 0.029, 0.016 ,0.005, 0.013, 0.25]
@@ -35,16 +41,19 @@ class Engine:
 		for i in range(len(w)):
 			az.append([w[i],dy[i]*random.random(),dx*random.random()])
 		return az
-
+		"""
 		# TIMUR
-		weights = [math.trunc(random.random()*conf.Game_window_height) for i in range(0,conf.Game_window_width,conf.Game_window_width//conf.POLYNOMIAL_DEGREE)]
-		return weights + [weights[0]]
+		weights = [math.trunc(np.random.uniform()*conf.Game_window_height) for i in range(0,conf.Game_window_width,conf.Game_window_width//conf.POLYNOMIAL_DEGREE)]
+		return weights
+#		weights = [math.trunc(random.random()*conf.Game_window_height) for i in range(0,conf.Game_window_width,conf.Game_window_width//conf.POLYNOMIAL_DEGREE)]
+		#return weights + [weights[0]]
 
 	#
 	# return pixels
 	#
 	def __generate(self,weights):
 		# ANDREY
+		"""
 		pix = []
 		min_y = 50
 		for i in range(conf.Game_window_width):
@@ -53,14 +62,28 @@ class Engine:
 				x += j[1] + j[1] * math.sin(j[0] * (i + j[2]))
 			pix.append(min_y + int(x))
 		return pix
-
+		"""
 		# TIMUR
+		grid = [i for i in range(0,conf.Game_window_width,conf.Game_window_width//conf.POLYNOMIAL_DEGREE)]
+		if (max(grid) != conf.Game_window_width):
+			grid[-1] = conf.Game_window_width
+	#	print(grid, len(grid))
+	#	print(weights, len(weights))
+		f = interp1d(grid,weights,kind='cubic')
+		pixels = [f(x) for x in range(max(grid))]
+	#	print(pixels)
+		fmin = min(pixels)
+		fmax = max(pixels)
+		return list(map(lambda x: 50 + math.trunc(conf.Game_window_height / conf.COMPRESSION_RATIO * (x-fmin)/(fmax-fmin)), pixels))
+		
+		
+		"""
 		f = np.poly1d(np.polyfit(range(0,conf.Game_window_width+1,conf.Game_window_width//conf.POLYNOMIAL_DEGREE),weights,conf.POLYNOMIAL_DEGREE))
 		pixels = [f(x) for x in range(conf.Game_window_width)]
 		fmin = min(pixels)
 		fmax = max(pixels)
 		return list(map(lambda x: math.trunc(conf.Game_window_height / conf.COMPRESSION_RATIO * (x-fmin)/(fmax-fmin)), pixels))
-
+		"""
 	#
 	# just draw landscape and nothing more
 	#
@@ -115,17 +138,23 @@ class Engine:
 	#   "line" : [ [x1,y1,x2,y2,border_width,color] , ... ]
 	#	"circle" : [ [x,y,radius,border_width,color] , ... ]
 	#	"rectangle": [ [x1,y1,x2,y2,border_width,color] , ... ]
-	# }
+	# }*
 	# DONT FORGET TO CHECK IF KEY IN DICT
 	#
 	def __draw_obj(self,obj,X,Y):
-		pass # FIXME
+		for l in elementary.pop('line'):#exception
+			self.canvas.create_line(l[0] + X,l[1] + Y,l[2] + X,l[3] + Y,width = l[4],fill =l[5])
+		for l in elementary.pop('circle'):#exception
+			self.canvas.create_oval(l[0]-l[2] + X,l[1]-l[2] + Y,l[0]+l[2] + X,l[1]+l[2] + Y,width = l[3],fill =l[4])
+		for l in elementary.pop('rectangle'):#exception
+			self.canvas.create_rectangle(l[0] + X,l[1] + Y,l[2] + X,l[3] + Y,width = l[4],fill =l[5])		
+#		pass # FIXME
 
 	#
 	# single draw
 	#
 	def single_draw(self):
-		for tank in self.Tanks:
+		for tank in self.Tank:
 			tank.move() # that's all
 
 		i = 0
@@ -137,7 +166,7 @@ class Engine:
 			else:
 				i+=1
 
-		for i in (self.Tanks + self.__missiles_n_blows):
+		for i in (self.Tank + self.__missiles_n_blows):
 			obj = i.draw(),
 			x,y = i.getXY()
 			self.__draw_obj(obj,x,y)
@@ -172,10 +201,10 @@ class Engine:
 	def place_tanks(self,x1=None,x2=None):
 		if x1 == None and x2 == None:
 			z = (float(conf.Game_window_width) / 4.0)
-			x1 = z + (random.rand() * z - z/2.0)
-			x2 = z - (random.rand() * z - z/2.0)
-		tank1 = Basic_Tank(x,self.engine.get_pixel(x),angle=conf.Pi/4)
-		tank2 = Basic_Tank(x,self.engine.get_pixel(x),angle=3*conf.Pi/4)
+			x1 = z + (random.random() * z - z/2.0)
+			x2 = z - (random.random() * z - z/2.0)
+		tank1 = Basic_Tank(self,x1,self.get_pixel(x1),angle=conf.Pi/4)
+		tank2 = Basic_Tank(self,x2,self.get_pixel(x2),angle=3*conf.Pi/4)
 		self.add_tank(tank1,"left")
 		self.add_tank(tank2,"right")
 		#self.conn.send_tanks(x1,x2)

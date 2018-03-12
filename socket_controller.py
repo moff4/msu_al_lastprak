@@ -5,7 +5,7 @@ import controller
 
 class Socket_Controller(controller.Controller):
 	def __init__(self,conn,engine,left=True):
-		super(controller.Controller, self).__init__(engine)
+		super(controller.Controller, self).__init__()#super(controller.Controller, self).__init__(engine)
 		self.engine = engine
 		self.conn = conn # connector.Connector
 		self.left = left # if that user's tank is left one
