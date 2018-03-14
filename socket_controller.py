@@ -27,7 +27,7 @@ class Socket_Controller(controller.Controller):
 			if msg != None:
 				msg = json.loads(msg)
 				if 'weights' in msg:
-					self.engine.set_weights()
+					self.engine.set_weights(msg['weights'])
 				elif 'left_x' in msg:
 					self.engine.place_tanks(msg['left_x'],msg['right_x'])
 				else:

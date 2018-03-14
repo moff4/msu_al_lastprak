@@ -7,7 +7,7 @@ import controller
 
 class User_Controller(controller.Controller):
 	def __init__(self,conn,engine,left=True):
-		super(controller.Controller, self).__init__()#super(controller.Controller, self).__init__(engine)
+		super(controller.Controller, self).__init__()
 		self.engine = engine
 		self.conn = conn # connector.Connector
 		if left:
@@ -28,7 +28,6 @@ class User_Controller(controller.Controller):
 	def press(self,event):
 		if event.event_type == "down" and self.go:
 			boo = True
-			#print("%s , %s, %s , %s , %s ."%(event.event_type,event.name,event.scan_code,type(event.scan_code),event.time))
 			obj = {
 				"tank": self.left
 			}

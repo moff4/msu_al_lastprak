@@ -92,7 +92,7 @@ delay_ping								=	3.5
 #                                   Engine
 #------------------------------------------------------------------------------
 # frames per seconds (float)
-fps										=	1#10
+fps										=	10
 # Pi - math const (float)
 Pi										=	3.1415
 # G - gravity const from physics (float)

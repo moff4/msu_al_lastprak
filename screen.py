@@ -27,14 +27,18 @@ class Screen:
 		__cc = int((conf.Screen_width-conf.Game_window_width)/2)
 		self.canvas.place(x=__cc,y=__cc)
 
-		self.engine = Engine(self.canvas)
+		self.engine = Engine(self.canvas,draw_landscape = left)
+		self.left = left
 		if left:
 			self.conn.send_weight(self.engine.get_weights())#self.connector.send_weight(self.engine.get_weights())
 			self.place_tanks()
+		else:
+			self.conn.ping()
 
 		self.user_cntl = None
 		self.sock_cntl = None
-
+		self.fork()
+		
 		self.go = True
 
 		text= ""
@@ -62,9 +66,10 @@ class Screen:
 	# main loop
 	#
 	def run(self):
+		if not self.left:
+			while not self.engine.is_ready():
+				time.sleep(0.5)
 		self.draw_picture()
-		if __name__ != "__main__":
-			self.fork()
 		self.root.mainloop()
 		self.wait()
 
@@ -80,11 +85,11 @@ class Screen:
 	# start controller's
 	#
 	def fork(self):		
-		self.user = user_cntl(self.conn,self.left)
+		self.user = user_cntl(self.conn,self.engine,self.left)
 		self.user_cntl = Thread(target=self.user.loop,args=[])
 		self.user_cntl.start()
 		
-		self.sock = sock_cntl(self.conn,not self.left)
+		self.sock = sock_cntl(self.conn,self.engine,not self.left)
 		self.sock_cntl = Thread(target=self.sock.loop,args=[])
 		self.sock_cntl.start()
 
@@ -115,10 +120,10 @@ class Screen:
 	# callback from timer to draw picture
 	#
 	def draw_picture(self):
+		print('---DRAW---')
 		if self.go:
 			self.root.after(self.fps_delay,self.draw_picture)
-			#self.engine.f()				# comment before realize	# FIXME
-			self.engine.single_draw() 	# uncomment before realize 	# FIXME
+			self.engine.single_draw()
 			if not self.engine.check_game():
 				self.stop_game()
 

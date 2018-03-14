@@ -1,8 +1,9 @@
 #!/usr/bin/env python3.6
 
 class Controller:
-	def __init__(self,engine):
-		self.engine = engine
+	def __init__(self):
+		#self.engine = engine
+		pass
 
 	#
 	# dick = {

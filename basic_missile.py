@@ -8,8 +8,8 @@ class Basic_Missile:
 	def __init__(self,engine,x,y,power,angle):
 		self.engine = engine
 		self.speed_weight = conf.Missile_speed_weight
-		self.__Vx = power * math.cos(angle) * speed_weight
-		self.__Vy = power * math.cos(angle) * speed_weight
+		self.__Vx = power * math.cos(angle) * self.speed_weight
+		self.__Vy = power * math.cos(angle) * self.speed_weight
 		self.__X = x
 		self.__Y = y
 		self.__blow_class = Basic_Blow

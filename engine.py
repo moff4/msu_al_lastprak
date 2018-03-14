@@ -11,16 +11,18 @@ from scipy.interpolate import interp1d
 from scipy import interpolate
 
 class Engine:
-	def __init__(self,canvas):
+	def __init__(self,canvas,draw_landscape=True):
 		self.__canvas = canvas 
 		self.Tank = [None,None] # users' tanks # LEFT TANK MUST BE 0 , RIGHT TANK MUST BE 1
 		self.SCORE = [None,None]
 		self.__missiles_n_blows= [] # missiles and blows
 		self.__threads = []	# threads
 		self.__internal_timer = 0 # count already drawen frames
-		self.__weights = self.__find_seed()
-		self.__pixels = self.__generate(self.__weights)
-		self.__draw_landscape()
+		if draw_landscape:
+			self.__weights = self.__find_seed()
+			self.__pixels = self.__generate(self.__weights)
+			self.__draw_landscape()
+		self.__ready = 0
 
 	def f(self):
 		self.clean()
@@ -130,6 +132,7 @@ class Engine:
 	def set_weights(self,weights):
 		self.__weights = weights
 		self.__pixels = self.__generate(self.__weights)
+		self.__ready += 1
 	#
 	# get dict with info how to draw obj
 	# and it's current position
@@ -150,8 +153,7 @@ class Engine:
 				self.canvas.create_oval(l[0]-l[2] + X,l[1]-l[2] + Y,l[0]+l[2] + X,l[1]+l[2] + Y,width = l[3],fill =l[4])
 		if 'rectangle' in obj:	
 			for l in obj.pop('rectangle'):
-				self.canvas.create_rectangle(l[0] + X,l[1] + Y,l[2] + X,l[3] + Y,width = l[4],fill =l[5])		
-#		pass # FIXME
+				self.canvas.create_rectangle(l[0] + X,l[1] + Y,l[2] + X,l[3] + Y,width = l[4],fill =l[5])
 
 	#
 	# single draw
@@ -185,6 +187,12 @@ class Engine:
 			return None
 
 	#
+	# return True if engine is ready for game
+	#
+	def is_ready(self):
+		return self.__ready == 2
+
+	#
 	# add new missile or blow
 	#
 	def add_missile_or_blow(self,obj):
@@ -210,5 +218,5 @@ class Engine:
 		tank2 = Basic_Tank(self,x2,self.get_pixel(x2),angle=3*conf.Pi/4)
 		self.add_tank(tank1,"left")
 		self.add_tank(tank2,"right")
-		#self.conn.send_tanks(x1,x2)
+		self.__ready += 1
 		return x1,x2

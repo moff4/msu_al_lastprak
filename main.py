@@ -25,6 +25,7 @@ def main(args):
 			pass
 		conn , mode = MM.get_result()
 		if conn != None:
+			print('---%s---'%mode)
 			sc = Screen(conn,mode == 'server') # conn - connector.Connector()
 			try:
 				sc.run()

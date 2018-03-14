@@ -22,13 +22,14 @@ class Connector:
 		if self.mode == 'client':
 			sock = socket.socket()
 			sock.connect((self.host,self.port))
+			#sock.settimeout(conf.Socket_listen_timeout)
 		elif self.mode == 'server':
 			sock = socket.socket()
 			sock.bind(('',self.port))
 			sock.listen(1)
 			sock.settimeout(conf.Socket_listen_timeout)
 			sock , addr = sock.accept()
-			sock.settimeout(conf.Socket_listen_timeout)#conn.settimeout(conf.Socket_listen_timeout)
+			#sock.settimeout(conf.Socket_listen_timeout)
 		else:
 			raise RuntimeError('Invalid mode')
 		self.send_ping(sock)
@@ -60,7 +61,7 @@ class Connector:
 		if type(msg) == str:
 			msg = msg.decode()
 		query = asc.b2a_base64(str(len(msg)).encode())[:-1] + b' ' + msg
-		print('send: %s'%query)
+		print('send: %s'%(query.decode()))
 		sock.send(query)
 
 	#
@@ -72,7 +73,9 @@ class Connector:
 		while q != b' ':
 			q = sock.recv(1)
 			query += q
-		return sock.recv(int(asc.a2b_base64(query[:-1]).decode()))
+		st = sock.recv(int(asc.a2b_base64(query[:-1]).decode()))
+		print('recv: %s'%(query.decode() + st.decode()))
+		return st
 	#
 	# recv ping signal
 	# return True if got ping
@@ -94,7 +97,7 @@ class Connector:
 		def delay_ping():
 			time.sleep(conf.delay_ping)
 			self.write_msg(conf.PING_MSG)
-		t = Thread(target=lambda x:delay_ping,args=[conn])
+		t = Thread(target=lambda x:delay_ping,args=[self.__socket])
 		t.start()
 		self.threads.append(t)
 		i = 0
@@ -134,7 +137,7 @@ class Connector:
 			self.__send(self.__socket,msg)
 			return True
 		except Exception as e:
-			print('ERROR: send into socket: %s')
+			print('ERROR: send into socket: %s'%e)
 			return False
 
 	#
@@ -148,6 +151,13 @@ class Connector:
 	#
 	def send_tanks(self,left_x,right_x):
 		self.write_msg(json.dumps({'left_x':left_x,'right_x':right_x}))		
+
+
+	#
+	# just ping peer
+	#
+	def ping(self):
+		self.send_ping(self.__socket)
 
 if __name__ == '__main__':
 	Flag = True
