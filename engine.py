@@ -99,8 +99,12 @@ class Engine:
 	# u should create explosion funnel in (X,Y) with radius R
 	#
 	def blow_landscape(self,X,R):
-		pass # FIXME
-	
+		Y = self.__pixels[X]
+		for i in range(X-R, X+R):
+			origin = self.__pixels[i]
+			circle = math.sqrt(pow(R,2)-pow((i-X),2))
+			self.__pixels[i]=int(max(0,min(origin,Y-circle)+max(0,origin-Y-circle)))
+			
 	#
 	# print on canvas, that game is over and smbd won or game is over
 	#
