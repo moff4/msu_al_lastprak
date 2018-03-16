@@ -119,8 +119,9 @@ class Engine:
 		#self.__canvas.create_text(conf.Game_window_width / 2,conf.Game_window_height / 10,fill="red",font="Times 50 italic bold",text="You lose")
 		
 		# score
-		self.__canvas.create_text(conf.Game_window_width / 10,conf.Game_window_height / 10,fill="blue",font="Arial 15 italic bold",text="1000")
-		self.__canvas.create_text(conf.Game_window_width / 10 * 9,conf.Game_window_height / 10,fill="blue",font="Arial 15 italic bold",text=" 999")
+		self.__canvas.create_text(conf.Game_window_width / 10,conf.Game_window_height / 10,fill="blue",font="Arial 15 italic bold",text=self.SCORE[0].ljust(4))
+		self.__canvas.create_text(conf.Game_window_width / 10 * 9,conf.Game_window_height / 10,fill="blue",font="Arial 15 italic bold",text=self.SCORE[1].ljust(4))
+		
 		#aiming
 		self.__canvas.create_text(conf.Game_window_width / 10,conf.Game_window_height / 20,fill="blue",font="Arial 15 italic bold",text="45° | 100%")
 		
