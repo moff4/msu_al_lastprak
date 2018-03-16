@@ -109,7 +109,8 @@ class Engine:
 	# print on canvas, that game is over and smbd won or game is over
 	#
 	def print_end(self):
-		pass # FIXME
+		self.__canvas.create_text(conf.Game_window_width / 2,conf.Game_window_height / 10,fill="green",font="Times 50 italic bold",text="You win")
+		#self.__canvas.create_text(conf.Game_window_width / 2,conf.Game_window_height / 10,fill="red",font="Times 50 italic bold",text="You lose")
 
 	#
 	# return False if any user got score >= max score
