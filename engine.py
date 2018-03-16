@@ -109,9 +109,21 @@ class Engine:
 	# print on canvas, that game is over and smbd won or game is over
 	#
 	def print_end(self):
+		"""TODO: 
+		      вынести константы в conf.py
+		      научить эту процедуру определять какое сообщение нужно печатать
+		      вынести score и aiming в отдельную процедуру
+		"""
+		#win or lose
 		self.__canvas.create_text(conf.Game_window_width / 2,conf.Game_window_height / 10,fill="green",font="Times 50 italic bold",text="You win")
 		#self.__canvas.create_text(conf.Game_window_width / 2,conf.Game_window_height / 10,fill="red",font="Times 50 italic bold",text="You lose")
-
+		
+		# score
+		self.__canvas.create_text(conf.Game_window_width / 10,conf.Game_window_height / 10,fill="blue",font="Arial 15 italic bold",text="1000")
+		self.__canvas.create_text(conf.Game_window_width / 10 * 9,conf.Game_window_height / 10,fill="blue",font="Arial 15 italic bold",text=" 999")
+		#aiming
+		self.__canvas.create_text(conf.Game_window_width / 10,conf.Game_window_height / 20,fill="blue",font="Arial 15 italic bold",text="45° | 100%")
+		
 	#
 	# return False if any user got score >= max score
 	#
