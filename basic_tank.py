@@ -67,7 +67,7 @@ class Basic_Tank:
 		dx = int(math.cos(self.__angle) * self.s * 1.5)
 		dy = int(math.sin(self.__angle) * self.s * 1.5)
 		obj = {
-			'lines': [
+			'line': [
 				[ a[0],a[1], b[0],b[1] , 2 , self.color ],
 				[ b[0],b[1], c[0],c[1] , 2 , self.color ],
 				[ c[0],c[1], a[0],a[1] , 2 , self.color ],

@@ -66,7 +66,6 @@ class Basic_Missile:
 	#
 	def draw(self):
 		obj = {
-			"line":[],
 			"circle":[
 				[0,0,self.__size,2,self.__main_color]
 			]

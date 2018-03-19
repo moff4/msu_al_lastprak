@@ -165,13 +165,13 @@ class Engine:
 	def __draw_obj(self,obj,X,Y):
 		if 'line' in obj:		
 			for l in obj['line']:
-				self.canvas.create_line(int(l[0] + X),int(l[1] + Y),int(l[2] + X),int(l[3] + Y),width = l[4],fill =l[5])
+				self.__canvas.create_line(int(l[0] + X),int(conf.Game_window_height - l[1] - Y),int(l[2] + X),int(conf.Game_window_height - l[3] - Y),width = l[4],fill =l[5])
 		if 'circle' in obj:	
 			for l in obj['circle']:
-				self.canvas.create_oval(int(l[0]-l[2] + X),int(l[1]-l[2] + Y),int(l[0]+l[2] + X),int(l[1]+l[2] + Y),width = l[3],fill =l[4])
+				self.__canvas.create_oval(int(l[0]-l[2] + X),int(l[1]-l[2] + Y),int(l[0]+l[2] + X),int(l[1]+l[2] + Y),width = l[3],fill =l[4])
 		if 'rectangle' in obj:	
 			for l in obj['rectangle']:
-				self.canvas.create_rectangle(int(l[0] + X),int(l[1] + Y),int(l[2] + X),int(l[3] + Y),width = l[4],fill =l[5])
+				self.__canvas.create_rectangle(int(l[0] + X),int(l[1] + Y),int(l[2] + X),int(l[3] + Y),width = l[4],fill =l[5])
 
 	#
 	# single draw
@@ -192,9 +192,9 @@ class Engine:
 				i+=1
 
 		for i in (self.Tank + self.__missiles_n_blows):
-			obj = i.draw(),
+			obj = i.draw()
 			x,y = i.getXY()
-			print('Draw object: (%s,%s)'%(x,y))
+			print('Draw object: (%s,%s): %s %s'%(x,y,type(obj),obj))
 			self.__draw_obj(obj,x,y)
 		self.__internal_timer += 1
 
