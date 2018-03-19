@@ -54,7 +54,7 @@ class Basic_Missile:
 	# destroy itself and create extra blow or missle objects in case of need
 	#
 	def reroze(self,_timer=0):
-		self.engine.add_missle_or_blow(self.__blow_class(engine=self.engine,x=self.__X,y=self.engine.get_pixel(self.__X)))
+		self.engine.add_missile_or_blow(self.__blow_class(engine=self.engine,x=self.__X,y=self.engine.get_pixel(self.__X)))
 
 	#
 	# return dict with info how to draw this object
