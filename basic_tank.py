@@ -50,7 +50,7 @@ class Basic_Tank:
 	#
 	def getXY(self):
 		#return self.__X,self.__Y
-		return self.__X,self.engine.get_pixel(self.__X)
+		return int(self.__X),self.engine.get_pixel(self.__X)
 
 	#
 	# return dict with info how to draw this object

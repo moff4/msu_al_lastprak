@@ -28,7 +28,7 @@ class Basic_Missile:
 	# return position for this object
 	#
 	def getXY(self):
-		return self.__X,self.__Y
+		return int(self.__X),int(self.__Y)
 	#
 	# move missle for next dx,dy
 	#
