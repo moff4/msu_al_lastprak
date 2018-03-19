@@ -158,12 +158,19 @@ class Engine:
 	# DONT FORGET TO CHECK IF KEY IN DICT
 	#
 	def __draw_obj(self,obj,X,Y):
+		def check_xx(x1,x2):
+			if x1 < 0:
+				x1 = 0
+			if x2 >= conf.Game_window_width:
+				x2 = conf.Game_window_width-1
+			return x1,x2
 		if 'line' in obj:		
 			for l in obj['line']:
 				x1 = int(l[0] + X)
 				y1 = int(conf.Game_window_height - (l[1] + Y))
 				x2 = int(l[2] + X)
 				y2 = int(conf.Game_window_height - (l[3] + Y))
+				x1 , x2 = check_xx(x1,x2)
 				self.__canvas.create_line(x1,y1,x2,y2,width = l[4],fill =l[5])
 		if 'circle' in obj:	
 			print('draw-obj: (%s,%s) %s %s'%(X,Y,type(obj),obj))
@@ -172,6 +179,7 @@ class Engine:
 				y1 = int(conf.Game_window_height - (l[1]-l[2] + Y))
 				x2 = int(l[0]+l[2] + X)
 				y2 = int(conf.Game_window_height - (l[1]+l[2] + Y))
+				x1 , x2 = check_xx(x1,x2)
 				self.__canvas.create_oval(x1,y1,x2,y2,width = l[3],fill =l[4])
 		if 'rectangle' in obj:	
 			for l in obj['rectangle']:
@@ -179,6 +187,7 @@ class Engine:
 				y1 = int(conf.Game_window_height - (l[1] + Y))
 				x2 = int(l[2] + X)
 				y2 = int(conf.Game_window_height - (l[3] + Y))
+				x1 , x2 = check_xx(x1,x2)
 				self.__canvas.create_rectangle(x1,y1,x2,y2,width = l[4],fill =l[5])
 
 	#

@@ -22,10 +22,14 @@ class Basic_Tank:
 		self.move_counter = 0
 		self.max_step = conf.Basic_tank_max_step
 
+		
 		self.color = conf.Basic_tank_color # color of tank
 		self.s = conf.Basic_tank_size / 2.0 # half of size in pixels
 		self.cos_30 = int(math.cos(math.pi/6.0) * self.s)
 		self.sin_30 = int(math.sin(math.pi/6.0) * self.s)
+
+		self.__min = self.s + 1
+		self.__max = conf.Game_window_width - self.__min
 
 		self.rad = math.pi / 180.0
 
@@ -39,6 +43,10 @@ class Basic_Tank:
 	def move(self):
 		self.__X += self.move_counter
 		self.move_counter = 0
+		if self.__X < self.__min:
+			self.__X = self.__min
+		elif self.__X > self.__max :
+			self.__X = self.__max
 		return self.__X
 
 	#
