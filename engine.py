@@ -99,11 +99,13 @@ class Engine:
 	# u should create explosion funnel in (X,Y) with radius R
 	#
 	def blow_landscape(self,X,R):
-		Y = self.__pixels[X]
-		for i in range(X-R, X+R):
-			origin = self.__pixels[i]
+		Y = self.__pixels[int(X)]
+		i = X-R
+		while i < (X+R):
+			origin = self.__pixels[int(i)]
 			circle = math.sqrt(pow(R,2)-pow((i-X),2))
-			self.__pixels[i]=int(max(0,min(origin,Y-circle)+max(0,origin-Y-circle)))
+			self.__pixels[int(i)]=int(max(0,min(origin,Y-circle)+max(0,origin-Y-circle)))
+			i += 1
 			
 	#
 	# print on canvas, that game is over and smbd won or game is over
@@ -163,9 +165,10 @@ class Engine:
 	# DONT FORGET TO CHECK IF KEY IN DICT
 	#
 	def __draw_obj(self,obj,X,Y):
+		print('draw-obj: (%s,%s) %s %s'%(X,Y,type(obj),obj))
 		if 'line' in obj:		
 			for l in obj['line']:
-				self.__canvas.create_line(int(l[0] + X),int(conf.Game_window_height - l[1] - Y),int(l[2] + X),int(conf.Game_window_height - l[3] - Y),width = l[4],fill =l[5])
+				self.__canvas.create_line(int(l[0] + X),int(l[1] + Y),int(l[2] + X),int(l[3] + Y),width = l[4],fill =l[5])
 		if 'circle' in obj:	
 			for l in obj['circle']:
 				self.__canvas.create_oval(int(l[0]-l[2] + X),int(l[1]-l[2] + Y),int(l[0]+l[2] + X),int(l[1]+l[2] + Y),width = l[3],fill =l[4])
@@ -194,7 +197,6 @@ class Engine:
 		for i in (self.Tank + self.__missiles_n_blows):
 			obj = i.draw()
 			x,y = i.getXY()
-			print('Draw object: (%s,%s): %s %s'%(x,y,type(obj),obj))
 			self.__draw_obj(obj,x,y)
 		self.__internal_timer += 1
 
@@ -234,8 +236,10 @@ class Engine:
 	def place_tanks(self,x1=None,x2=None):
 		if x1 == None and x2 == None:
 			z = (float(conf.Game_window_width) / 4.0)
-			x1 = z + (random.random() * z - z/2.0)
-			x2 = z - (random.random() * z - z/2.0)
+			#x1 = z + (random.random() * z - z/2.0)
+			#x2 = z - (random.random() * z - z/2.0)
+			x1 = 2.0/7.0*z + random.random()*z/7.0
+			x2 = 5.0/7.0*z + random.random()*z/7.0
 		tank1 = Basic_Tank(self,x1,self.get_pixel(x1),angle=conf.Pi/4)
 		tank2 = Basic_Tank(self,x2,self.get_pixel(x2),angle=3*conf.Pi/4)
 		self.add_tank(tank1,"left")

@@ -37,12 +37,8 @@ class Basic_Tank:
 	# return new X
 	#
 	def move(self):
-		if self.move_counter > 0:
-			self.move_counter -= 1
-			self.__X += 1
-		elif self.move_counter < 0:
-			self.move_counter += 1
-			self.__X -= 1
+		self.__X += self.move_counter
+		self.move_counter = 0
 		return self.__X
 
 	#
@@ -61,9 +57,9 @@ class Basic_Tank:
 	# }
 	#
 	def draw(self):
-		a = [ 0 , - self.s ]
-		b = [ self.cos_30 , self.sin_30 ]
-		c = [ -self.cos_30 , self.sin_30 ]
+		a = [ 0 , self.s ]
+		b = [ self.cos_30 , -self.sin_30 ]
+		c = [ -self.cos_30 , -self.sin_30 ]
 		dx = int(math.cos(self.__angle) * self.s * 1.5)
 		dy = int(math.sin(self.__angle) * self.s * 1.5)
 		obj = {

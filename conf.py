@@ -109,7 +109,7 @@ Basic_tank_max_step						=	5
 # color of the tank (str as "#??????") 
 Basic_tank_color						=	'#00FF00'
 # tank's size in pixels (float)
-Basic_tank_size							=	20
+Basic_tank_size							=	30
 #------------------------------------------------------------------------------
 #                                Basic Misslie
 #------------------------------------------------------------------------------

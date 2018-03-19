@@ -9,8 +9,8 @@ class Basic_Blow:
 		self.__Y = y
 		self.__r = 0
 		self.__max_r = int(conf.Blow_max_size/2)
-		self.__color = Blow_color
-		self.__wave_width = Blow_width
+		self.__color = conf.Blow_color
+		self.__wave_width = conf.Blow_width
 
 	#########################
 	## ENGINE CONTROLL API ##
