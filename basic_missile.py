@@ -35,7 +35,7 @@ class Basic_Missile:
 	def next(self,_timer=0):
 		if len(self.__traceback) >= self.__traceback_length:
 			self.__traceback[:(self.__traceback_length - 1)]
-		self.__traceback_length = ([self.__X,self.__Y]) + self.__traceback
+		self.__traceback = ([self.__X,self.__Y]) + self.__traceback
 		self.__X += self.__Vx / float(conf.fps)
 		self.__Y += self.__Vy / float(conf.fps)
 		self.__Vy -= conf.G / float(conf.fps)
