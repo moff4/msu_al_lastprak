@@ -68,6 +68,8 @@ Screen_help_msg = ["Ты управляешь <LEFT-OR-RIGHT> танком. Ат
 Screen_left_pos							=	"левым"
 # str for rigth tank insterted in help-msg (str)
 Screen_right_pos						=	"правым"
+# text on stop button
+stop_button_name						=	"Выход"
 #------------------------------------------------------------------------------
 #                                Connections
 #------------------------------------------------------------------------------
@@ -127,8 +129,8 @@ Misslie_trace_color						=	"#FF0000"
 #                                Basic Blow
 #------------------------------------------------------------------------------
 # max size of the blow in pixels (int)
-Blow_max_size							=	30
+Blow_max_size							=	50
 # color of the blow's wave (str as "#??????")
 Blow_color								=	"#FF0000"
 # width of the blow's wave in pixels (int)
-Blow_width								=	5
+Blow_width								=	10

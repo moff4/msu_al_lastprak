@@ -46,7 +46,7 @@ class Basic_Missile:
 	def done(self):
 		if not (0 < self.__X < conf.Game_window_width):
 			return True
-		elif self.__Y > self.engine.get_pixel(self.__X):
+		elif self.__Y <= self.engine.get_pixel(self.__X):
 			return True
 		else:
 			return False

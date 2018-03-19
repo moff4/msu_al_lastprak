@@ -41,6 +41,10 @@ class Screen:
 		
 		self.go = True
 
+		stop_button = tk.Button(self.root,text=conf.stop_button_name,fg=conf.MainMenu_BackgroundColor)
+		stop_button.bind("<Button-1>", self.stop_game)
+		stop_button.place(height=conf.Game_window_height+20,width=120,x=70,y=190)
+
 		text= ""
 		avr = 0.0
 		SUBSTR = "<LEFT-OR-RIGHT>"

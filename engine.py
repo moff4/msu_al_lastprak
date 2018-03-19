@@ -69,30 +69,22 @@ class Engine:
 		grid = [i for i in range(0,conf.Game_window_width,conf.Game_window_width//conf.POLYNOMIAL_DEGREE)]
 		if (max(grid) != conf.Game_window_width):
 			grid[-1] = conf.Game_window_width
-	#	print(grid, len(grid))
-	#	print(weights, len(weights))
 		f = interp1d(grid,weights,kind='cubic')
 		pixels = [f(x) for x in range(max(grid))]
-	#	print(pixels)
 		fmin = min(pixels)
 		fmax = max(pixels)
 		return list(map(lambda x: 50 + math.trunc(conf.Game_window_height / conf.COMPRESSION_RATIO * (x-fmin)/(fmax-fmin)), pixels))
-		
-		
-		"""
-		f = np.poly1d(np.polyfit(range(0,conf.Game_window_width+1,conf.Game_window_width//conf.POLYNOMIAL_DEGREE),weights,conf.POLYNOMIAL_DEGREE))
-		pixels = [f(x) for x in range(conf.Game_window_width)]
-		fmin = min(pixels)
-		fmax = max(pixels)
-		return list(map(lambda x: math.trunc(conf.Game_window_height / conf.COMPRESSION_RATIO * (x-fmin)/(fmax-fmin)), pixels))
-		"""
+			
 	#
 	# just draw landscape and nothing more
 	#
 	def __draw_landscape(self):
+		obj = {
+			"line":[]
+		}
 		for i in range(len(self.__pixels)-1):
 			obj["line"].append([i,self.__pixels[i],i+1,self.__pixels[i+1],1,'green'])
-#			self.__canvas.create_line(i,conf.Game_window_height-self.__pixels[i],i+1,conf.Game_window_height-self.__pixels[i+1])#,fill='green')
+		return obj
 	
 	
 	#
@@ -169,20 +161,32 @@ class Engine:
 		print('draw-obj: (%s,%s) %s %s'%(X,Y,type(obj),obj))
 		if 'line' in obj:		
 			for l in obj['line']:
-				self.__canvas.create_line(int(l[0] + X),int(l[1] + Y),int(l[2] + X),int(l[3] + Y),width = l[4],fill =l[5])
+				x1 = int(l[0] + X)
+				y1 = int(conf.Game_window_height - (l[1] + Y))
+				x2 = int(l[2] + X)
+				y2 = int(conf.Game_window_height - (l[3] + Y))
+				self.__canvas.create_line(x1,y1,x2,y2,width = l[4],fill =l[5])
 		if 'circle' in obj:	
 			for l in obj['circle']:
-				self.__canvas.create_oval(int(l[0]-l[2] + X),int(l[1]-l[2] + Y),int(l[0]+l[2] + X),int(l[1]+l[2] + Y),width = l[3],fill =l[4])
+				x1 = int(l[0]-l[2] + X)
+				y1 = int(conf.Game_window_height - (l[1]-l[2] + Y))
+				x2 = int(l[0]+l[2] + X)
+				y2 = int(conf.Game_window_height - (l[1]+l[2] + Y))
+				self.__canvas.create_oval(x1,y1,x2,y2,width = l[3],fill =l[4])
 		if 'rectangle' in obj:	
 			for l in obj['rectangle']:
-				self.__canvas.create_rectangle(int(l[0] + X),int(l[1] + Y),int(l[2] + X),int(l[3] + Y),width = l[4],fill =l[5])
+				x1 = int(l[0] + X)
+				y1 = int(conf.Game_window_height - (l[1] + Y))
+				x2 = int(l[2] + X)
+				y2 = int(conf.Game_window_height - (l[3] + Y))
+				self.__canvas.create_rectangle(x1,y1,x2,y2,width = l[4],fill =l[5])
 
 	#
 	# single draw
 	#
 	def single_draw(self):
 		self.clean()
-		self.__draw_landscape()
+		self.__draw_obj(self.__draw_landscape(),0,0)
 		for tank in self.Tank:
 			tank.move() # that's all
 
