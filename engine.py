@@ -164,13 +164,13 @@ class Engine:
 	#
 	def __draw_obj(self,obj,X,Y):
 		if 'line' in obj:		
-			for l in obj.pop('line'):
+			for l in obj['line']:
 				self.canvas.create_line(l[0] + X,l[1] + Y,l[2] + X,l[3] + Y,width = l[4],fill =l[5])
 		if 'circle' in obj:	
-			for l in obj.pop('circle'):
+			for l in obj['circle']:
 				self.canvas.create_oval(l[0]-l[2] + X,l[1]-l[2] + Y,l[0]+l[2] + X,l[1]+l[2] + Y,width = l[3],fill =l[4])
 		if 'rectangle' in obj:	
-			for l in obj.pop('rectangle'):
+			for l in obj['rectangle']:
 				self.canvas.create_rectangle(l[0] + X,l[1] + Y,l[2] + X,l[3] + Y,width = l[4],fill =l[5])
 
 	#
