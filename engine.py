@@ -203,8 +203,9 @@ class Engine:
 	#
 	def get_pixel(self,x):
 		try:
-			return self.__pixels[x]
-		except:
+			return self.__pixels[int(x)]
+		except Exception as e:
+			print('get-pixel: %s'%e)
 			return None
 
 	#
