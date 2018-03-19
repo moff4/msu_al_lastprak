@@ -91,7 +91,8 @@ class Engine:
 	#
 	def __draw_landscape(self):
 		for i in range(len(self.__pixels)-1):
-			self.__canvas.create_line(i,conf.Game_window_height-self.__pixels[i],i+1,conf.Game_window_height-self.__pixels[i+1])#,fill='green')
+			obj["line"].append([i,self.__pixels[i],i+1,self.__pixels[i+1],1,'green'])
+#			self.__canvas.create_line(i,conf.Game_window_height-self.__pixels[i],i+1,conf.Game_window_height-self.__pixels[i+1])#,fill='green')
 	
 	
 	#
