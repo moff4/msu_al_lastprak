@@ -158,7 +158,6 @@ class Engine:
 	# DONT FORGET TO CHECK IF KEY IN DICT
 	#
 	def __draw_obj(self,obj,X,Y):
-		print('draw-obj: (%s,%s) %s %s'%(X,Y,type(obj),obj))
 		if 'line' in obj:		
 			for l in obj['line']:
 				x1 = int(l[0] + X)
@@ -167,6 +166,7 @@ class Engine:
 				y2 = int(conf.Game_window_height - (l[3] + Y))
 				self.__canvas.create_line(x1,y1,x2,y2,width = l[4],fill =l[5])
 		if 'circle' in obj:	
+			print('draw-obj: (%s,%s) %s %s'%(X,Y,type(obj),obj))
 			for l in obj['circle']:
 				x1 = int(l[0]-l[2] + X)
 				y1 = int(conf.Game_window_height - (l[1]-l[2] + Y))

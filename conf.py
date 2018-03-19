@@ -116,7 +116,7 @@ Basic_tank_size							=	30
 #                                Basic Misslie
 #------------------------------------------------------------------------------
 # Weight for speed of missle; the bigger weight - the bigger speed (float)
-Missile_speed_weight					=	1.0
+Missile_speed_weight					=	2.0
 # length of missile traceback (int)
 Missile_trace_length					=	5
 # size of misslie in pixels (int)
@@ -129,8 +129,8 @@ Misslie_trace_color						=	"#FF0000"
 #                                Basic Blow
 #------------------------------------------------------------------------------
 # max size of the blow in pixels (int)
-Blow_max_size							=	50
+Blow_max_size							=	30
 # color of the blow's wave (str as "#??????")
 Blow_color								=	"#FF0000"
 # width of the blow's wave in pixels (int)
-Blow_width								=	10
+Blow_width								=	3

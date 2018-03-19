@@ -8,8 +8,8 @@ class Basic_Missile:
 	def __init__(self,engine,x,y,power,angle):
 		self.engine = engine
 		self.speed_weight = conf.Missile_speed_weight
-		self.__Vx = power * math.cos(angle) * self.speed_weight
-		self.__Vy = power * math.cos(angle) * self.speed_weight
+		self.__Vx = power * math.cos(angle)
+		self.__Vy = power * math.cos(angle)
 		self.__X = x
 		self.__Y = y
 		self.__blow_class = Basic_Blow
@@ -36,8 +36,8 @@ class Basic_Missile:
 		if len(self.__traceback) >= self.__traceback_length:
 			self.__traceback[:(self.__traceback_length - 1)]
 		self.__traceback = [[self.__X,self.__Y]] + self.__traceback
-		self.__X += self.__Vx / float(conf.fps)
-		self.__Y += self.__Vy / float(conf.fps)
+		self.__X += (self.__Vx / float(conf.fps)) * self.speed_weight
+		self.__Y += (self.__Vy / float(conf.fps)) * self.speed_weight
 		self.__Vy -= conf.G / float(conf.fps)
 	#
 	# return True if method "next" is over
@@ -68,7 +68,7 @@ class Basic_Missile:
 		obj = {
 			"line":[],
 			"circle":[
-				[0,0,self.__size,2,self.__main_color]
+				[0.0,0.0,self.__size,2,self.__main_color]
 			]
 		}
 		#az = [[self.__X,self.__Y]] + self.__traceback

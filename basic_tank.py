@@ -117,4 +117,4 @@ class Basic_Tank:
 	# FIRE!!!!!!!
 	#
 	def fire(self):
-		self.engine.add_missile_or_blow(self.__weapons[self.__weapon_counter%len(self.__weapons)](engine=self.engine,power=self.__power,angle=self.__angle,x=self.__X,y=self.__Y))
+		self.engine.add_missile_or_blow(self.__weapons[self.__weapon_counter%len(self.__weapons)](engine=self.engine,power=self.__power,angle=self.__angle,x=self.__X,y=self.__Y+5))

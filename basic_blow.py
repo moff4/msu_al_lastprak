@@ -49,6 +49,8 @@ class Basic_Blow:
 	#
 	def draw(self):
 		obj = {
-			"circle":[0,0,self.__r,self.__wave_width,self.__color]
+			"circle":[
+				[0.0,0.0,self.__r,self.__wave_width,self.__color]
+			]
 		}
 		return obj
