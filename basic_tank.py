@@ -9,6 +9,7 @@ class Basic_Tank:
 		self.engine = engine
 		self.__X = x
 		self.__Y = y
+		print('TANK-INIT: x = %s ; y = %s'%(x,y))
 		if angle == None:
 			self.__angle = -math.pi/4.0
 		else:

@@ -194,6 +194,7 @@ class Engine:
 		for i in (self.Tank + self.__missiles_n_blows):
 			obj = i.draw(),
 			x,y = i.getXY()
+			print('Draw object: (%s,%s)'%(x,y))
 			self.__draw_obj(obj,x,y)
 		self.__internal_timer += 1
 
