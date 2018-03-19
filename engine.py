@@ -177,6 +177,9 @@ class Engine:
 	# single draw
 	#
 	def single_draw(self):
+		self.clean()
+		self.__draw_landscape()
+		print('--- DRAW ---')
 		for tank in self.Tank:
 			tank.move() # that's all
 

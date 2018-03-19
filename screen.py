@@ -120,7 +120,6 @@ class Screen:
 	# callback from timer to draw picture
 	#
 	def draw_picture(self):
-		print('---DRAW---')
 		if self.go:
 			self.root.after(self.fps_delay,self.draw_picture)
 			self.engine.single_draw()
