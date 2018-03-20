@@ -22,6 +22,7 @@ class Screen:
 		self.left = left
 		self.conn = conn # change on controllers
 		self.fps_delay = int(1000.0/conf.fps)
+		self.fps_landscape = int(1000.0/conf.fps_landscape)
 		
 		self.canvas = tk.Canvas(self.root, width=conf.Game_window_width, height=conf.Game_window_height,background="#FFFFFF")
 		__cc = int((conf.Screen_width-conf.Game_window_width)/2)
@@ -70,12 +71,17 @@ class Screen:
 	# main loop
 	#
 	def run(self):
-		if not self.left:
-			while not self.engine.is_ready():
-				time.sleep(0.5)
-		self.draw_picture()
-		self.root.mainloop()
-		self.wait()
+		try:
+			if not self.left:
+				while not self.engine.is_ready():
+					time.sleep(0.5)
+			self.draw_picture()
+			self.draw_landscape()
+			self.root.mainloop()
+			self.wait()
+			self.destroy()
+		except SystemExit:
+			pass
 
 	#
 	# place tanks
@@ -117,8 +123,10 @@ class Screen:
 		self.sock.stop()
 		self.user.stop()
 		self.engine.clean()
+		self.engine.clean_land()
 		self.engine.print_end()
 		self.wait()
+		raise SystemExit('Must be!')
 
 	#
 	# callback from timer to draw picture
@@ -129,6 +137,16 @@ class Screen:
 			self.engine.single_draw()
 			if not self.engine.check_game():
 				self.stop_game()
+
+	#
+	# callback from timer to draw picture
+	#
+	def draw_landscape(self):
+		if self.go:
+			self.root.after(self.fps_landscape,self.draw_landscape)
+			self.engine.draw_landscape()
+			# if not self.engine.check_game():
+			# 	self.stop_game()
 
 if __name__ == '__main__':
 	Screen(None).run()

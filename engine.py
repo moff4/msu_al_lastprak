@@ -23,6 +23,8 @@ class Engine:
 			self.__pixels = self.__generate(self.__weights)
 			self.__draw_landscape()
 		self.__ready = 0
+		self.__land_lines = []
+		self.__moveble_objects = []
 
 	def f(self):
 		self.clean()
@@ -80,10 +82,14 @@ class Engine:
 	#
 	def __draw_landscape(self):
 		obj = {
-			"line":[]
+			"line":[[]]
 		}
-		for i in range(len(self.__pixels)-1):
-			obj["line"].append([i,self.__pixels[i],i+1,self.__pixels[i+1],1,'green'])
+		for i in range(len(self.__pixels)):
+			obj["line"][0].append(i)
+			obj["line"][0].append(self.__pixels[i])
+		obj["line"][0] += [1,'green']
+		# for i in range(len(self.__pixels)-1):
+		# 	obj["line"].append([i,self.__pixels[i],i+1,self.__pixels[i+1],1,'green'])
 		return obj
 	
 	
@@ -127,11 +133,18 @@ class Engine:
 		return True # FIXME
 
 	#
-	# delete all objects from canvas
+	# delete all moveble objects from canvas
 	#
-	def clean(self):
-		for i in self.__canvas.find_all(): # old but tested
-			self.__canvas.delete(i)
+	def clean(self,elements=None):
+		if elements == None:
+			elements = self.__canvas.find_all()
+		for i in elements: # old but tested
+			#
+			# shoulf not delete landscape 
+			# for landcape should be special clean
+			# FIXME
+			#
+			self.__canvas.delete(i) 
 
 	#
 	# just return weights and nothing else
@@ -151,7 +164,7 @@ class Engine:
 	# and it's current position
 	# and draw it
 	# UPD: obj = {
-	#   "line" : [ [x1,y1,x2,y2,border_width,color] , ... ]
+	#   "line" : [ [x1,y1,x2,y2, ... ,border_width,color] , ... ]
 	#	"circle" : [ [x,y,radius,border_width,color] , ... ]
 	#	"rectangle": [ [x1,y1,x2,y2,border_width,color] , ... ]
 	# }*
@@ -164,14 +177,22 @@ class Engine:
 			if x2 >= conf.Game_window_width:
 				x2 = conf.Game_window_width-1
 			return x1,x2
+		created_objects = []
 		if 'line' in obj:		
 			for l in obj['line']:
-				x1 = int(l[0] + X)
-				y1 = int(conf.Game_window_height - (l[1] + Y))
-				x2 = int(l[2] + X)
-				y2 = int(conf.Game_window_height - (l[3] + Y))
-				x1 , x2 = check_xx(x1,x2)
-				self.__canvas.create_line(x1,y1,x2,y2,width = l[4],fill =l[5])
+				az = []
+				for i in l[:-2]:
+					if len(az) % 2 == 0:
+						az.append(int(i + X))
+					else:
+						az.append(int(conf.Game_window_height - (i + Y)))
+				created_objects.append(self.__canvas.create_line(*az,width = l[-2],fill =l[-1]))
+				# x1 = int(l[0] + X)
+				# y1 = int(conf.Game_window_height - (l[1] + Y))
+				# x2 = int(l[2] + X)
+				# y2 = int(conf.Game_window_height - (l[3] + Y))
+				# x1 , x2 = check_xx(x1,x2)
+				# self.__canvas.create_line(x1,y1,x2,y2,width = l[4],fill =l[5])
 		if 'circle' in obj:	
 			print('draw-obj: (%s,%s) %s %s'%(X,Y,type(obj),obj))
 			for l in obj['circle']:
@@ -180,7 +201,7 @@ class Engine:
 				x2 = int(l[0]+l[2] + X)
 				y2 = int(conf.Game_window_height - (l[1]+l[2] + Y))
 				x1 , x2 = check_xx(x1,x2)
-				self.__canvas.create_oval(x1,y1,x2,y2,width = l[3],fill =l[4])
+				created_objects.append(self.__canvas.create_oval(x1,y1,x2,y2,width = l[3],fill =l[4]))
 		if 'rectangle' in obj:	
 			for l in obj['rectangle']:
 				x1 = int(l[0] + X)
@@ -188,14 +209,23 @@ class Engine:
 				x2 = int(l[2] + X)
 				y2 = int(conf.Game_window_height - (l[3] + Y))
 				x1 , x2 = check_xx(x1,x2)
-				self.__canvas.create_rectangle(x1,y1,x2,y2,width = l[4],fill =l[5])
+				created_objects.append(self.__canvas.create_rectangle(x1,y1,x2,y2,width = l[4],fill =l[5]))
+		return created_objects
+
 
 	#
-	# single draw
+	# redraw landscape
+	#
+	def draw_landscape(self):
+		self.clean(self.__land_lines)
+		self.__land_lines = self.__draw_obj(self.__draw_landscape(),0,0)
+
+
+	#
+	# single draw of all moveble objects
 	#
 	def single_draw(self):
-		self.clean()
-		self.__draw_obj(self.__draw_landscape(),0,0)
+		self.clean(self.__moveble_objects)
 		for tank in self.Tank:
 			tank.move() # that's all
 
@@ -208,11 +238,13 @@ class Engine:
 			else:
 				i+=1
 
+		objs = []
 		for i in (self.Tank + self.__missiles_n_blows):
 			obj = i.draw()
 			x,y = i.getXY()
-			self.__draw_obj(obj,x,y)
+			objs += self.__draw_obj(obj,x,y)
 		self.__internal_timer += 1
+		self.__moveble_objects = objs
 
 	#
 	# return landscape Y for current x

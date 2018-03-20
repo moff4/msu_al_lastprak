@@ -108,8 +108,8 @@ class MainMenu:
 				self.__result = conn , mode
 				self.root.quit()
 		except Exception as e:
-			e = traceback.format_exc()
-			messagebox.showerror('Error','%s'%e)
+			#e = traceback.format_exc()
+			messagebox.showerror('Smth happened','%s'%e)
 
 	#
 	# exit button pressed
@@ -123,4 +123,7 @@ class MainMenu:
 	# run GUI
 	#
 	def run(self):
-		self.root.mainloop()
+		try:
+			self.root.mainloop()
+		except SystemExit:
+			pass

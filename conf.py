@@ -93,8 +93,10 @@ delay_ping								=	3.5
 #------------------------------------------------------------------------------
 #                                   Engine
 #------------------------------------------------------------------------------
-# frames per seconds (float)
+# frames per seconds for all movable objects (float)
 fps										=	10
+# frames per second for landscape (float)
+fps_landscape							=	5
 # Pi - math const (float)
 Pi										=	3.1415
 # G - gravity const from physics (float)

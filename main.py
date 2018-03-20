@@ -17,20 +17,14 @@ HELP_MSG = '''
 
 def main(args):
 	conn = 1
+	MM = MainMenu()
 	while conn != None:
-		MM = MainMenu()
-		try:
-			MM.run()
-		except SystemExit:
-			pass
+		MM.run()
 		conn , mode = MM.get_result()
 		if conn != None:
 			print('---%s---'%mode)
 			sc = Screen(conn,mode == 'server') # conn - connector.Connector()
-			try:
-				sc.run()
-			except SystemExit:
-				pass
+			sc.run()
 
 	#
 	# to be continued ...
