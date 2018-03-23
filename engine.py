@@ -187,7 +187,7 @@ class Engine:
 						az.append(int(i + X))
 					else:
 						az.append(int(conf.Game_window_height - (i + Y)))
-				created_objects.append(self.__canvas.create_line(*az,width = l[-2],outline =l[-1]))
+				created_objects.append(self.__canvas.create_line(*az,width = l[-2],fill =l[-1]))
 				# x1 = int(l[0] + X)
 				# y1 = int(conf.Game_window_height - (l[1] + Y))
 				# x2 = int(l[2] + X)
