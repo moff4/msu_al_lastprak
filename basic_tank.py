@@ -36,6 +36,19 @@ class Basic_Tank:
 	#########################
 	## ENGINE CONTROLL API ##
 	#########################
+
+	#
+	# return current tank's power
+	#
+	def get_power(self):
+		return self.__power
+
+	#
+	# return current tank's angle
+	#
+	def get_angle(self):
+		return self.__angle
+
 	#
 	# move changes X according to move_counter
 	# return new X

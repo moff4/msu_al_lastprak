@@ -20,6 +20,8 @@ class Basic_Missile:
 		self.__main_color =  conf.Misslie_main_color
 		self.__trace_color = conf.Misslie_trace_color
 
+		self.__done = False
+
 
 	#########################
 	## ENGINE CONTROLL API ##
@@ -36,8 +38,16 @@ class Basic_Missile:
 		if len(self.__traceback) >= self.__traceback_length:
 			self.__traceback[:(self.__traceback_length - 1)]
 		self.__traceback = [[self.__X,self.__Y]] + self.__traceback
-		self.__X += (self.__Vx / float(conf.fps)) * self.speed_weight
-		self.__Y += (self.__Vy / float(conf.fps)) * self.speed_weight
+		dx = (self.__Vx / float(conf.fps)) * self.speed_weight
+		dy = (self.__Vy / float(conf.fps)) * self.speed_weight / dx
+		for i in range(int(dx)):
+			self.__X += 1
+			self.__Y += dy
+			if self.done():
+				self.__done = True
+				return
+		self.__X = int(self.__X)
+		self.__Y = int(self.__Y)
 		self.__Vy -= conf.G / float(conf.fps)
 	#
 	# return True if method "next" is over
@@ -49,11 +59,16 @@ class Basic_Missile:
 		elif self.__Y <= self.engine.get_pixel(self.__X):
 			return True
 		else:
-			return False
+			return self.__done
 	#
 	# destroy itself and create extra blow or missle objects in case of need
 	#
 	def reroze(self,_timer=0):
+		# experemental
+		self.engine.add_missile_or_blow(self.__blow_class(engine=self.engine,x=self.__X,y=y))
+		return
+		
+		# old and tested 
 		y = self.engine.get_pixel(self.__X)
 		if y != None:
 			self.engine.add_missile_or_blow(self.__blow_class(engine=self.engine,x=self.__X,y=y))
