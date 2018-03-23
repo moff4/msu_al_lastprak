@@ -72,9 +72,9 @@ class Basic_Tank:
 		dy = int(math.sin(self.__angle) * self.s * 1.5)
 		obj = {
 			'line': [
-				[ a[0],a[1], b[0],b[1] , 2 , self.color ],
-				[ b[0],b[1], c[0],c[1] , 2 , self.color ],
-				[ c[0],c[1], a[0],a[1] , 2 , self.color ],
+				[ a[0],a[1], b[0],b[1] , 
+				  b[0],b[1], c[0],c[1] ,
+				  c[0],c[1], a[0],a[1] , 2 , self.color ],
 				[ 0 , 0  ,  dx , dy    , 3 , '#000000']
 			]
 		}
