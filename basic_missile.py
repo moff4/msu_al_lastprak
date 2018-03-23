@@ -38,10 +38,10 @@ class Basic_Missile:
 		if len(self.__traceback) >= self.__traceback_length:
 			self.__traceback[:(self.__traceback_length - 1)]
 		self.__traceback = [[self.__X,self.__Y]] + self.__traceback
-		dx = (self.__Vx / float(conf.fps)) * self.speed_weight
+		dx = (self.__Vx / float(conf.fps)) * self.speed_weight * 10
 		dy = (self.__Vy / float(conf.fps)) * self.speed_weight / dx
 		for i in range(int(dx)):
-			self.__X += 1
+			self.__X += 0.1
 			self.__Y += dy
 			if self.done():
 				self.__done = True
@@ -65,7 +65,7 @@ class Basic_Missile:
 	#
 	def reroze(self,_timer=0):
 		# experemental
-		self.engine.add_missile_or_blow(self.__blow_class(engine=self.engine,x=self.__X,y=y))
+		self.engine.add_missile_or_blow(self.__blow_class(engine=self.engine,x=self.__X,y=self.__Y))
 		return
 		
 		# old and tested 
