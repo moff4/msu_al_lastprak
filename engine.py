@@ -282,7 +282,7 @@ class Engine:
 	#
 	def place_tanks(self,x1=None,x2=None):
 		if x1 == None and x2 == None:
-			z = (float(conf.Game_window_width) / 4.0)
+			z = (float(conf.Game_window_width))
 			#x1 = z + (random.random() * z - z/2.0)
 			#x2 = z - (random.random() * z - z/2.0)
 			x1 = 2.0/7.0*z + random.random()*z/7.0
