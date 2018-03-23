@@ -98,13 +98,14 @@ class Engine:
 	# u should create explosion funnel in (X,Y) with radius R
 	#
 	def blow_landscape(self,X,R):
-		Y = self.__pixels[int(X)]
-		i = X-R
-		while i < (X+R):
-			origin = self.__pixels[int(i)]
-			circle = math.sqrt(pow(R,2)-pow((i-X),2))
-			self.__pixels[int(i)]=int(max(0,min(origin,Y-circle)+max(0,origin-Y-circle)))
-			i += 1
+		if 0 <= X < conf.Game_window_width):
+			Y = self.__pixels[int(X)]
+			i = max(0,X-R)
+			while i < min((X+R),conf.Game_window_width):
+				origin = self.__pixels[int(i)]
+				circle = math.sqrt(pow(R,2)-pow((i-X),2))
+				self.__pixels[int(i)]=int(max(0,min(origin,Y-circle)+max(0,origin-Y-circle)))
+				i += 1
 			
 	#
 	# print on canvas, that game is over and smbd won or game is over
