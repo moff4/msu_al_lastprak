@@ -202,7 +202,7 @@ class Engine:
 				x2 = int(l[0]+l[2] + X)
 				y2 = int(conf.Game_window_height - (l[1]+l[2] + Y))
 				x1 , x2 = check_xx(x1,x2)
-				created_objects.append(self.__canvas.create_oval(x1,y1,x2,y2,width = l[3],fill =l[4]))
+				created_objects.append(self.__canvas.create_oval(x1,y1,x2,y2,width = l[3],outline =l[4]))#fill
 		if 'rectangle' in obj:	
 			for l in obj['rectangle']:
 				x1 = int(l[0] + X)
