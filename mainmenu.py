@@ -115,7 +115,7 @@ class MainMenu:
 	# exit button pressed
 	#
 	def exit_button_click(self,x):
-		self.__result = None
+		self.__result = None , None
 		raise SystemExit
 		#self.root.destroy()
 
