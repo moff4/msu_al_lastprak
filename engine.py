@@ -187,7 +187,7 @@ class Engine:
 						az.append(int(i + X))
 					else:
 						az.append(int(conf.Game_window_height - (i + Y)))
-				created_objects.append(self.__canvas.create_line(*az,width = l[-2],fill =l[-1]))
+				created_objects.append(self.__canvas.create_line(*az,width = l[-2],outline =l[-1]))
 				# x1 = int(l[0] + X)
 				# y1 = int(conf.Game_window_height - (l[1] + Y))
 				# x2 = int(l[2] + X)
@@ -202,7 +202,7 @@ class Engine:
 				x2 = int(l[0]+l[2] + X)
 				y2 = int(conf.Game_window_height - (l[1]+l[2] + Y))
 				x1 , x2 = check_xx(x1,x2)
-				created_objects.append(self.__canvas.create_oval(x1,y1,x2,y2,width = l[3],outline =l[4]))#fill
+				created_objects.append(self.__canvas.create_oval(x1,y1,x2,y2,width = l[3],outline =l[4]))
 		if 'rectangle' in obj:	
 			for l in obj['rectangle']:
 				x1 = int(l[0] + X)
@@ -210,7 +210,7 @@ class Engine:
 				x2 = int(l[2] + X)
 				y2 = int(conf.Game_window_height - (l[3] + Y))
 				x1 , x2 = check_xx(x1,x2)
-				created_objects.append(self.__canvas.create_rectangle(x1,y1,x2,y2,width = l[4],fill =l[5]))
+				created_objects.append(self.__canvas.create_rectangle(x1,y1,x2,y2,width = l[4],outline =l[5]))
 		return created_objects
 
 
