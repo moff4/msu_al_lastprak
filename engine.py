@@ -14,10 +14,11 @@ class Engine:
 	def __init__(self,canvas,draw_landscape=True):
 		self.__canvas = canvas 
 		self.Tank = [None,None] # users' tanks # LEFT TANK MUST BE 0 , RIGHT TANK MUST BE 1
-		self.SCORE = [None,None]
+		self.SCORE = [0.0,0.0]
 		self.__missiles_n_blows= [] # missiles and blows
 		self.__threads = []	# threads
 		self.__internal_timer = 0 # count already drawen frames
+		self.__ap = [None,None] # left-right angle-power text ids
 		if draw_landscape:
 			self.__weights = self.__find_seed()
 			self.__pixels = self.__generate(self.__weights)
@@ -110,6 +111,21 @@ class Engine:
 	#
 	# print on canvas, that game is over and smbd won or game is over
 	#
+	def print_current(self):
+		angle0 = format(self.Tank[0].get_angle(), '.3f')
+		power0 = format(self.Tank[0].get_power(), '.2f')
+		angle1 = format(self.Tank[1].get_angle(), '.3f')
+		power1 = format(self.Tank[1].get_power(), '.2f')
+		text0 = "%s° | %s%%"%(angle0,power0)
+		text1 = "%s° | %s%%"%(angle1,power1)
+		#Баг, при достижении power 100% если попытаться увиличить еще, то станет 99
+		if self.__ap[0] == None and self.__ap[1] == None:
+			self.__ap[0] = self.__canvas.create_text(conf.Game_window_width / 10,conf.Game_window_height / 20,fill="blue",font="Arial 15 italic bold",text=text0)
+			self.__ap[1] = self.__canvas.create_text(conf.Game_window_width / 10 * 9,conf.Game_window_height / 20,fill="blue",font="Arial 15 italic bold",text=text1)
+		else:
+			self.__canvas.itemconfig(self.__ap[0], text=text0)
+			self.__canvas.itemconfig(self.__ap[1], text=text1)
+	
 	def print_end(self):
 		"""TODO: 
 		      вынести константы в conf.py
@@ -123,9 +139,6 @@ class Engine:
 		# score
 		self.__canvas.create_text(conf.Game_window_width / 10,conf.Game_window_height / 10,fill="blue",font="Arial 15 italic bold",text=self.SCORE[0].ljust(4))
 		self.__canvas.create_text(conf.Game_window_width / 10 * 9,conf.Game_window_height / 10,fill="blue",font="Arial 15 italic bold",text=self.SCORE[1].ljust(4))
-		
-		#aiming
-		self.__canvas.create_text(conf.Game_window_width / 10,conf.Game_window_height / 20,fill="blue",font="Arial 15 italic bold",text="45° | 100%")
 		
 	#
 	# return False if any user got score >= max score
@@ -220,7 +233,7 @@ class Engine:
 	def draw_landscape(self):
 		self.clean(self.__land_lines)
 		self.__land_lines = self.__draw_obj(self.__draw_landscape(),0,0)
-
+		self.print_current()
 
 	#
 	# single draw of all moveble objects
