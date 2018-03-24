@@ -15,11 +15,13 @@ class Engine:
 		self.__canvas = canvas 
 		self.Tank = [None,None] # users' tanks # LEFT TANK MUST BE 0 , RIGHT TANK MUST BE 1
 		self.SCORE = [0.0,0.0]
+		self.MAX_SCORE = 1000.0
 		self.__missiles_n_blows= [] # missiles and blows
 		self.__threads = []	# threads
 		self.__internal_timer = 0 # count already drawen frames
 		self.__ap = [None,None] # left-right angle-power text ids
 		self.__scrid = [None,None] # left-right score text ids
+		self.__left = draw_landscape
 		if draw_landscape:
 			self.__weights = self.__find_seed()
 			self.__pixels = self.__generate(self.__weights)
@@ -108,10 +110,7 @@ class Engine:
 				circle = math.sqrt(pow(R,2)-pow((i-X),2))
 				self.__pixels[int(i)]=int(max(0,min(origin,Y-circle)+max(0,origin-Y-circle)))
 				i += 1
-			
-	#
-	# print on canvas, that game is over and smbd won or game is over
-	#
+
 	def print_current(self):
 		angle0 = round(180.0 * self.Tank[0].get_angle() / math.pi) % 360
 		power0 = format(self.Tank[0].get_power(), '.2f')
@@ -131,24 +130,23 @@ class Engine:
 			self.__canvas.itemconfig(self.__ap[1], text=text1)
 			self.__canvas.itemconfig(self.__scrid[0], text=text2)
 			self.__canvas.itemconfig(self.__scrid[1], text=text3)
-	
-	def print_end(self):
-		"""TODO: 
-		      вынести константы в conf.py
-		      научить эту процедуру определять какое сообщение нужно печатать
-		      вынести score и aiming в отдельную процедуру
-		"""
-		#win or lose
-		self.__canvas.create_text(conf.Game_window_width / 2,conf.Game_window_height / 10,fill="green",font="Times 50 italic bold",text="You win")
-		#self.__canvas.create_text(conf.Game_window_width / 2,conf.Game_window_height / 10,fill="red",font="Times 50 italic bold",text="You lose")
-		
-		# score
+
+	#
+	# print on canvas, that game is over and smbd won or game is over
+	#	
+	def print_end(self):		
+		if (self.SCORE[0] == self.SCORE[1]):
+			self.__canvas.create_text(conf.Game_window_width / 2,conf.Game_window_height / 10,fill="yellow",font="Times 50 italic bold",text="Draw")
+		elif (self.__left and self.SCORE[0] > self.SCORE[1] or not (self.__left or self.SCORE[0] > self.SCORE[1])):
+			self.__canvas.create_text(conf.Game_window_width / 2,conf.Game_window_height / 10,fill="green",font="Times 50 italic bold",text="You win")
+		else:
+			self.__canvas.create_text(conf.Game_window_width / 2,conf.Game_window_height / 10,fill="red",font="Times 50 italic bold",text="You lose")
 
 	#
 	# return False if any user got score >= max score
 	#
 	def check_game(self):
-		return True # FIXME
+		return (self.SCORE[0] < self.MAX_SCORE and self.SCORE[1] < self.MAX_SCORE)
 
 	#
 	# delete all moveble objects from canvas

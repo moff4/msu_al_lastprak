@@ -123,7 +123,7 @@ class Screen:
 		self.sock.stop()
 		self.user.stop()
 		self.engine.clean()
-		self.engine.clean_land()
+		#self.engine.clean_land()
 		self.engine.print_end()
 		self.wait()
 		raise SystemExit('Must be!')
