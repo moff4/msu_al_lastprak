@@ -17,6 +17,7 @@ class Basic_Tank:
 			
 		self.__power = power # min , max == 0, 100
 		self.__MAX_POWER = 100.0
+		self.__MAX_ANGLE = 2 * math.pi
 		self.__weapons = weapons
 		self.__weapon_counter = 0
 		self.move_counter = 0
@@ -110,9 +111,9 @@ class Basic_Tank:
 	#
 	def change_angle(self,task):
 		if task == 'add':
-			self.__angle += self.rad
-		else:
-			self.__angle -= self.rad
+			self.__angle = (self.__angle + self.rad) % self.__MAX_ANGLE
+		elif task == 'sub':
+			self.__angle = (self.__angle - self.rad) % self.__MAX_ANGLE
 	
 	#
 	# changes power , task ::= add | sub (str)
@@ -120,7 +121,7 @@ class Basic_Tank:
 	def change_power(self,task):
 		if task == 'add' and self.__power < self.__MAX_POWER:
 			self.__power += 1
-		elif self.__power > 0:
+		elif task == 'sub' and self.__power > 0:
 			self.__power -= 1
 
 	#
