@@ -113,15 +113,14 @@ class Engine:
 	# print on canvas, that game is over and smbd won or game is over
 	#
 	def print_current(self):
-		angle0 = format(self.Tank[0].get_angle(), '.3f')
+		angle0 = round(180.0 * self.Tank[0].get_angle() / math.pi) % 360
 		power0 = format(self.Tank[0].get_power(), '.2f')
-		angle1 = format(self.Tank[1].get_angle(), '.3f')
+		angle1 = round(180.0 * self.Tank[1].get_angle() / math.pi) % 360
 		power1 = format(self.Tank[1].get_power(), '.2f')
 		text0 = "%s° | %s%%"%(angle0,power0)
 		text1 = "%s° | %s%%"%(angle1,power1)
 		text2 = format(self.SCORE[0], '.2f')
-		text3 = format(self.SCORE[1], '.2f')		
-		#Баг, при достижении power 100% если попытаться увиличить еще, то станет 99
+		text3 = format(self.SCORE[1], '.2f')
 		if self.__ap[0] == None and self.__ap[1] == None:
 			self.__ap[0] = self.__canvas.create_text(conf.Game_window_width / 10,conf.Game_window_height / 20,fill="blue",font="Arial 15 italic bold",text=text0)
 			self.__ap[1] = self.__canvas.create_text(conf.Game_window_width / 10 * 9,conf.Game_window_height / 20,fill="blue",font="Arial 15 italic bold",text=text1)
