@@ -19,6 +19,7 @@ class Engine:
 		self.__threads = []	# threads
 		self.__internal_timer = 0 # count already drawen frames
 		self.__ap = [None,None] # left-right angle-power text ids
+		self.__scrid = [None,None] # left-right score text ids
 		if draw_landscape:
 			self.__weights = self.__find_seed()
 			self.__pixels = self.__generate(self.__weights)
@@ -118,13 +119,19 @@ class Engine:
 		power1 = format(self.Tank[1].get_power(), '.2f')
 		text0 = "%s° | %s%%"%(angle0,power0)
 		text1 = "%s° | %s%%"%(angle1,power1)
+		text2 = format(self.SCORE[0], '.2f')
+		text3 = format(self.SCORE[1], '.2f')		
 		#Баг, при достижении power 100% если попытаться увиличить еще, то станет 99
 		if self.__ap[0] == None and self.__ap[1] == None:
 			self.__ap[0] = self.__canvas.create_text(conf.Game_window_width / 10,conf.Game_window_height / 20,fill="blue",font="Arial 15 italic bold",text=text0)
 			self.__ap[1] = self.__canvas.create_text(conf.Game_window_width / 10 * 9,conf.Game_window_height / 20,fill="blue",font="Arial 15 italic bold",text=text1)
+			self.__scrid[0] = self.__canvas.create_text(conf.Game_window_width / 10,conf.Game_window_height / 10,fill="blue",font="Arial 15 italic bold",text=text2)
+			self.__scrid[1] = self.__canvas.create_text(conf.Game_window_width / 10 * 9,conf.Game_window_height / 10,fill="blue",font="Arial 15 italic bold",text=text3)
 		else:
 			self.__canvas.itemconfig(self.__ap[0], text=text0)
 			self.__canvas.itemconfig(self.__ap[1], text=text1)
+			self.__canvas.itemconfig(self.__scrid[0], text=text2)
+			self.__canvas.itemconfig(self.__scrid[1], text=text3)
 	
 	def print_end(self):
 		"""TODO: 
@@ -137,9 +144,7 @@ class Engine:
 		#self.__canvas.create_text(conf.Game_window_width / 2,conf.Game_window_height / 10,fill="red",font="Times 50 italic bold",text="You lose")
 		
 		# score
-		self.__canvas.create_text(conf.Game_window_width / 10,conf.Game_window_height / 10,fill="blue",font="Arial 15 italic bold",text=self.SCORE[0].ljust(4))
-		self.__canvas.create_text(conf.Game_window_width / 10 * 9,conf.Game_window_height / 10,fill="blue",font="Arial 15 italic bold",text=self.SCORE[1].ljust(4))
-		
+
 	#
 	# return False if any user got score >= max score
 	#
