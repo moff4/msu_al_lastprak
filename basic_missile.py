@@ -21,8 +21,8 @@ class Basic_Missile:
 		self.__trace_color = conf.Misslie_trace_color
 
 		self.__done = False
-		print("power: %s ; angle: %s"%(power,angle / 3.1415 * 180))
-		print("x: %s ; y: %s ; vx: %s ; vy: %s"%(self.__X,self.__Y,self.__Vx,self.__Vy))
+	#	print("power: %s ; angle: %s"%(power,angle / 3.1415 * 180))
+	#	print("x: %s ; y: %s ; vx: %s ; vy: %s"%(self.__X,self.__Y,self.__Vx,self.__Vy))
 
 
 	#########################
@@ -60,7 +60,7 @@ class Basic_Missile:
 		self.__X = int(self.__X)
 		self.__Y = int(self.__Y)
 		self.__Vy -= conf.G / float(conf.fps)
-		print("dx: %s ; dy: %s ; VX,VY:(%s,%s) ; G: %s"%(dx,dy,self.__Vx,self.__Vy,conf.G))
+	#	print("dx: %s ; dy: %s ; VX,VY:(%s,%s) ; G: %s"%(dx,dy,self.__Vx,self.__Vy,conf.G))
 	#
 	# return True if method "next" is over
 	# or False
@@ -70,6 +70,10 @@ class Basic_Missile:
 			return True
 		elif self.__Y <= self.engine.get_pixel(self.__X):
 			return True
+	###
+		elif self.engine.Tank[0].near(self.__X,self.__Y) or self.engine.Tank[1].near(self.__X,self.__Y):
+			return True
+	###
 		else:
 			return self.__done
 	#

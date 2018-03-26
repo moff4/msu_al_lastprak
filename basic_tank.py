@@ -43,7 +43,11 @@ class Basic_Tank:
 	#
 	def get_power(self):
 		return self.__power
-
+	#
+	# returns True if current tank is near point(X,Y)
+	#
+	def near(self,X,Y):
+		return (((self.__X - X) ** 2 + (self.__Y - Y) ** 2) <= (self.s) ** 2)
 	#
 	# return current tank's angle
 	#
@@ -139,4 +143,4 @@ class Basic_Tank:
 	# FIRE!!!!!!!
 	#
 	def fire(self):
-		self.engine.add_missile_or_blow(self.__weapons[self.__weapon_counter%len(self.__weapons)](engine=self.engine,power=self.__power,angle=self.__angle,x=self.__X,y=self.engine.get_pixel(self.__X)+3))
+		self.engine.add_missile_or_blow(self.__weapons[self.__weapon_counter%len(self.__weapons)](engine=self.engine,power=self.__power,angle=self.__angle,x=self.__X  + math.cos(self.__angle) * self.s,y=self.engine.get_pixel(self.__X)++ math.sin(self.__angle) * self.s))

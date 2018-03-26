@@ -83,7 +83,13 @@ class Engine:
 				circle = math.sqrt(pow(R,2)-pow((i-X),2))
 				self.__pixels[int(i)]=int(max(0,min(origin,Y-circle)+max(0,origin-Y-circle)))
 				i += 1
-
+			for i in range (2):
+				try:
+					if self.Tank[i].near(X,Y):
+						self.SCORE[1-i] += 100.0
+						print("i = ", i, "SCORE = ", self.SCORE[1-i])
+				except Exception as e:
+					print("Score add: %s"%e)
 	def print_current(self):
 		angle0 = round(180.0 * self.Tank[0].get_angle() / math.pi) % 360
 		power0 = format(self.Tank[0].get_power(), '.2f')
