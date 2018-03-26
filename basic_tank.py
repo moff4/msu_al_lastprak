@@ -1,5 +1,6 @@
 #!/usr/bin/env python3.6
 import math
+import time
 
 import conf
 from basic_missile import Basic_Missile
@@ -26,6 +27,7 @@ class Basic_Tank:
 		
 		self.color = conf.Basic_tank_color # color of tank
 		self.s = conf.Basic_tank_size / 2.0 # half of size in pixels
+		self.ss = self.s ** 2
 		self.cos_30 = int(math.cos(math.pi/6.0) * self.s)
 		self.sin_30 = int(math.sin(math.pi/6.0) * self.s)
 
@@ -33,10 +35,30 @@ class Basic_Tank:
 		self.__max = conf.Game_window_width - self.__min
 
 		self.rad = math.pi / 180.0
+		self.last_presses = [['nothing',0.0],['nothing',0.0]]
+
+	#
+	# return weight if same button was pressed several times at once
+	#
+	def same_press(self,task):
+		if ((self.last_presses[0][0] == task) and (time.time() < (self.last_presses[0][1]+0.35))) and ((self.last_presses[1][0] == task) and (time.time() < (self.last_presses[1][1]+0.35))):
+			w = 3
+		else:
+			w = 1
+		self.last_presses.pop(0)
+		self.last_presses.append([task,time.time()])
+		return w
+
 
 	#########################
 	## ENGINE CONTROLL API ##
 	#########################
+
+	#
+	# return current weapon name
+	#
+	def get_current_weapon_name(self):
+		return self.__weapons[ self.__weapon_counter ].get_name()
 
 	#
 	# return current tank's power
@@ -47,7 +69,7 @@ class Basic_Tank:
 	# returns True if current tank is near point(X,Y)
 	#
 	def near(self,X,Y):
-		return (((self.__X - X) ** 2 + (self.__Y - Y) ** 2) <= (self.s) ** 2)
+		return ((self.__X - X) ** 2 + (self.__Y - Y) ** 2) <= self.ss
 	#
 	# return current tank's angle
 	#
@@ -106,27 +128,27 @@ class Basic_Tank:
 	#
 	def promise_move(self,task):
 		if task == 'left':
-			self.move_counter -= self.max_step
+			self.move_counter -= self.max_step * self.same_press(task)
 		elif  task == 'right':
-			self.move_counter += self.max_step
+			self.move_counter += self.max_step * self.same_press(task)
 
 	#
 	# changes angle , task ::= add | sub (str)
 	#
 	def change_angle(self,task):
 		if task == 'add':
-			self.__angle = (self.__angle + self.rad) % self.__MAX_ANGLE
+			self.__angle = (self.__angle + self.rad * self.same_press(task)) % self.__MAX_ANGLE
 		elif task == 'sub':
-			self.__angle = (self.__angle - self.rad) % self.__MAX_ANGLE
+			self.__angle = (self.__angle - self.rad * self.same_press(task)) % self.__MAX_ANGLE
 	
 	#
 	# changes power , task ::= add | sub (str)
 	#
 	def change_power(self,task):
 		if task == 'add' and self.__power < self.__MAX_POWER:
-			self.__power += 1
+			self.__power += 1 * self.same_press(task)
 		elif task == 'sub' and self.__power > 0:
-			self.__power -= 1
+			self.__power -= 1 * self.same_press(task)
 
 	#
 	# changes weapon , task ::= next | prev (str)
@@ -134,6 +156,7 @@ class Basic_Tank:
 	def change_weapon(self,task):
 		if task == 'next':
 			self.__weapon_counter += 1
+			self.__weapon_counter %= len(self.__weapon_counter)
 		else:
 			self.__weapon_counter -=1
 			if self.__weapon_counter < 0:
@@ -143,4 +166,4 @@ class Basic_Tank:
 	# FIRE!!!!!!!
 	#
 	def fire(self):
-		self.engine.add_missile_or_blow(self.__weapons[self.__weapon_counter%len(self.__weapons)](engine=self.engine,power=self.__power,angle=self.__angle,x=self.__X  + math.cos(self.__angle) * self.s,y=self.engine.get_pixel(self.__X)++ math.sin(self.__angle) * self.s))
+		self.engine.add_missile_or_blow(self.__weapons[self.__weapon_counter%len(self.__weapons)](engine=self.engine,power=self.__power,angle=self.__angle,x=self.__X  + math.cos(self.__angle) * self.s,y=self.engine.get_pixel(self.__X) + math.sin(self.__angle) * self.s))
