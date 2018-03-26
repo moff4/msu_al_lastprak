@@ -203,14 +203,7 @@ class Engine:
 					else:
 						az.append(int(conf.Game_window_height - (i + Y)))
 				created_objects.append(self.__canvas.create_line(*az,width = l[-2],fill =l[-1]))
-				# x1 = int(l[0] + X)
-				# y1 = int(conf.Game_window_height - (l[1] + Y))
-				# x2 = int(l[2] + X)
-				# y2 = int(conf.Game_window_height - (l[3] + Y))
-				# x1 , x2 = check_xx(x1,x2)
-				# self.__canvas.create_line(x1,y1,x2,y2,width = l[4],fill =l[5])
 		if 'circle' in obj:	
-			print('draw-obj: (%s,%s) %s %s'%(X,Y,type(obj),obj))
 			for l in obj['circle']:
 				x1 = int(l[0]-l[2] + X)
 				y1 = int(conf.Game_window_height - (l[1]-l[2] + Y))
@@ -269,7 +262,7 @@ class Engine:
 		try:
 			return self.__pixels[int(x)]
 		except Exception as e:
-			print('get-pixel: %s'%e)
+			print('get-pixel (%s): %s'%(x,e))
 			return None
 
 	#

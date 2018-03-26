@@ -118,7 +118,7 @@ class Screen:
 	#
 	#
 	#
-	def stop_game(self):
+	def stop_game(self,event):
 		self.go = False
 		self.sock.stop()
 		self.user.stop()

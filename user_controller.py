@@ -70,6 +70,10 @@ class User_Controller(controller.Controller):
 	#
 	def stop(self):
 		self.go = False
+		try:
+			self.close()
+		except Exception as e:
+			pass
 
 	#
 	# just loop

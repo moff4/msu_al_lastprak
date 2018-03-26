@@ -9,18 +9,18 @@ class Basic_Missile:
 		self.engine = engine
 		self.speed_weight = conf.Missile_speed_weight
 		self.__Vx = power * math.cos(angle)
-		self.__Vy = power * math.cos(angle)
+		self.__Vy = power * math.sin(angle)
 		self.__X = x
 		self.__Y = y
 		self.__blow_class = Basic_Blow
 		
 		self.__size = int(conf.Misslie_size / 2)
-		self.__traceback = []
-		self.__traceback_length = conf.Missile_trace_length
 		self.__main_color =  conf.Misslie_main_color
 		self.__trace_color = conf.Misslie_trace_color
 
 		self.__done = False
+		print("power: %s ; angle: %s"%(power,angle / 3.1415 * 180))
+		print("x: %s ; y: %s ; vx: %s ; vy: %s"%(self.__X,self.__Y,self.__Vx,self.__Vy))
 
 
 	#########################
@@ -35,13 +35,16 @@ class Basic_Missile:
 	# move missle for next dx,dy
 	#
 	def next(self,_timer=0):
-		if len(self.__traceback) >= self.__traceback_length:
-			self.__traceback[:(self.__traceback_length - 1)]
-		self.__traceback = [[self.__X,self.__Y]] + self.__traceback
-		dx = (self.__Vx / float(conf.fps)) * self.speed_weight * 10
-		dy = (self.__Vy / float(conf.fps)) * self.speed_weight / dx
-		for i in range(int(dx)):
-			self.__X += 0.1
+		def abs(x):
+			if x < 0:
+				return -x
+			else:
+				return x
+		dx = (self.__Vx / float(conf.fps)) * self.speed_weight
+		dy = (self.__Vy / float(conf.fps)) * self.speed_weight / abs(dx)
+		sx = dx / abs(dx)
+		for i in range(int(abs(dx))):
+			self.__X += sx
 			self.__Y += dy
 			if self.done():
 				self.__done = True
@@ -49,6 +52,7 @@ class Basic_Missile:
 		self.__X = int(self.__X)
 		self.__Y = int(self.__Y)
 		self.__Vy -= conf.G / float(conf.fps)
+		print("dx: %s ; dy: %s ; VX,VY:(%s,%s) ; G: %s"%(dx,dy,self.__Vx,self.__Vy,conf.G))
 	#
 	# return True if method "next" is over
 	# or False
@@ -67,11 +71,6 @@ class Basic_Missile:
 		# experemental
 		self.engine.add_missile_or_blow(self.__blow_class(engine=self.engine,x=self.__X,y=self.__Y))
 		return
-		
-		# old and tested 
-		y = self.engine.get_pixel(self.__X)
-		if y != None:
-			self.engine.add_missile_or_blow(self.__blow_class(engine=self.engine,x=self.__X,y=y))
 
 	#
 	# return dict with info how to draw this object
