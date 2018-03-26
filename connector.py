@@ -116,7 +116,7 @@ class Connector:
 		try:
 			msg = self.__recv(self.__socket)
 		except Exception as e:
-			print('ERROR: read from socket: %s'%e)
+			print('Warning: read from socket: %s'%e)
 			msg = b''
 		if msg == conf.PING_MSG:
 			self.__answer_ping()
@@ -137,7 +137,7 @@ class Connector:
 			self.__send(self.__socket,msg)
 			return True
 		except Exception as e:
-			print('ERROR: send into socket: %s'%e)
+			print('Warning: send into socket: %s'%e)
 			return False
 
 	#

@@ -5,6 +5,8 @@ import conf
 class Basic_Blow:
 	def __init__(self,engine,x,y):
 		self.engine = engine
+		self.__desctription = "Standart Blow"
+
 		self.__X = x
 		self.__Y = y
 		self.__r = 0
@@ -15,6 +17,11 @@ class Basic_Blow:
 	#########################
 	## ENGINE CONTROLL API ##
 	#########################
+	#
+	# return name of this blow
+	#
+	def get_name(self):
+		return self.__desctription
 	#
 	# return position for this object
 	#

@@ -17,7 +17,6 @@ class Engine:
 		self.SCORE = [0.0,0.0]
 		self.MAX_SCORE = 1000.0
 		self.__missiles_n_blows= [] # missiles and blows
-		self.__threads = []	# threads
 		self.__internal_timer = 0 # count already drawen frames
 		self.__ap = [None,None] # left-right angle-power text ids
 		self.__scrid = [None,None] # left-right score text ids
@@ -29,6 +28,7 @@ class Engine:
 		self.__ready = 0
 		self.__land_lines = []
 		self.__moveble_objects = []
+		self.__go = True
 
 	def f(self):
 		self.clean()
@@ -40,38 +40,13 @@ class Engine:
 	# return weights
 	#
 	def __find_seed(self):
-		# ANDREY
-		"""
-		dx	=	800
-		dy	=	[ 30 ,   50,    50,    40,    2  ]
-		w	=	[ 0.029, 0.016 ,0.005, 0.013, 0.25]
-		az = []
-		for i in range(len(w)):
-			az.append([w[i],dy[i]*random.random(),dx*random.random()])
-		return az
-		"""
-		# TIMUR
 		weights = [math.trunc(np.random.uniform()*conf.Game_window_height) for i in range(0,conf.Game_window_width,conf.Game_window_width//conf.POLYNOMIAL_DEGREE)]
 		return weights
-#		weights = [math.trunc(random.random()*conf.Game_window_height) for i in range(0,conf.Game_window_width,conf.Game_window_width//conf.POLYNOMIAL_DEGREE)]
-		#return weights + [weights[0]]
 
 	#
 	# return pixels
 	#
 	def __generate(self,weights):
-		# ANDREY
-		"""
-		pix = []
-		min_y = 50
-		for i in range(conf.Game_window_width):
-			x = 0.0
-			for j in weights:
-				x += j[1] + j[1] * math.sin(j[0] * (i + j[2]))
-			pix.append(min_y + int(x))
-		return pix
-		"""
-		# TIMUR
 		grid = [i for i in range(0,conf.Game_window_width,conf.Game_window_width//conf.POLYNOMIAL_DEGREE)]
 		if (max(grid) != conf.Game_window_width):
 			grid[-1] = conf.Game_window_width
@@ -92,8 +67,6 @@ class Engine:
 			obj["line"][0].append(i)
 			obj["line"][0].append(self.__pixels[i])
 		obj["line"][0] += [1,'green']
-		# for i in range(len(self.__pixels)-1):
-		# 	obj["line"].append([i,self.__pixels[i],i+1,self.__pixels[i+1],1,'green'])
 		return obj
 	
 	
@@ -146,7 +119,7 @@ class Engine:
 	# return False if any user got score >= max score
 	#
 	def check_game(self):
-		return (self.SCORE[0] < self.MAX_SCORE and self.SCORE[1] < self.MAX_SCORE)
+		return (self.SCORE[0] < self.MAX_SCORE and self.SCORE[1] < self.MAX_SCORE) and self.__go
 
 	#
 	# delete all moveble objects from canvas
@@ -254,6 +227,12 @@ class Engine:
 			objs += self.__draw_obj(obj,x,y)
 		self.__internal_timer += 1
 		self.__moveble_objects = objs
+
+	#
+	# set stop flag
+	#
+	def stop(self):
+		self.__go = False
 
 	#
 	# return landscape Y for current x

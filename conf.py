@@ -59,8 +59,8 @@ Screen_help_msg = ["Ты управляешь <LEFT-OR-RIGHT> танком. Ат
 Победит первый, кто наберет %s очков. "%(MAX_SCORE),
 "Управление:",
 "<- , -> - подвинуть танк влево/вправо",
-" A , D  - увеличить, уменьшить угол наклона орудия",
-" W , S  - увеличить, уменьшить мощность выстрела",
+" W , S  - увеличить, уменьшить угол наклона орудия",
+" A , D  - увеличить, уменьшить мощность выстрела",
 " Q , E  - Сменить снаряд",
 " ПРОБЕЛ - выстрелить"
 ]
@@ -119,8 +119,6 @@ Basic_tank_size							=	30
 #------------------------------------------------------------------------------
 # Weight for speed of missle; the bigger weight - the bigger speed (float)
 Missile_speed_weight					=	2.0
-# length of missile traceback (int)
-Missile_trace_length					=	5
 # size of misslie in pixels (int)
 Misslie_size							=	8
 # color of the missile (str as "#??????")

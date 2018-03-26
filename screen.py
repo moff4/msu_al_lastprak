@@ -79,9 +79,10 @@ class Screen:
 			self.draw_landscape()
 			self.root.mainloop()
 			self.wait()
-			self.destroy()
+			self.root.destroy()
 		except SystemExit:
-			pass
+			self.wait()
+			self.root.destroy()
 
 	#
 	# place tanks
@@ -109,19 +110,37 @@ class Screen:
 	def wait(self):
 		try:
 			self.conn.close()
-			for i in [self.user_cntl,self.sock_cntl]:
-				if i != None:
-					i.join()
 		except:
 			pass
+		for i in [self.user_cntl,self.sock_cntl]:
+			try:
+				if i != None:
+					i.join()
+			except:
+				pass
+
+	#
+	# return True if any of threads are dead
+	#
+	def check_game(self):
+		try:
+			return self.user_cntl.is_alive() and self.sock_cntl.is_alive()
+		except:
+			return True
 
 	#
 	#
 	#
 	def stop_game(self,event):
 		self.go = False
-		self.sock.stop()
-		self.user.stop()
+		try:
+			self.sock.stop()
+		except:
+			pass
+		try:
+			self.user.stop()
+		except:
+			pass
 		self.engine.clean()
 		#self.engine.clean_land()
 		self.engine.print_end()
@@ -135,8 +154,8 @@ class Screen:
 		if self.go:
 			self.root.after(self.fps_delay,self.draw_picture)
 			self.engine.single_draw()
-			if not self.engine.check_game():
-				self.stop_game()
+			if not self.engine.check_game() or not self.check_game():
+				self.stop_game('just suka stop')
 
 	#
 	# callback from timer to draw picture
@@ -145,8 +164,6 @@ class Screen:
 		if self.go:
 			self.root.after(self.fps_landscape,self.draw_landscape)
 			self.engine.draw_landscape()
-			# if not self.engine.check_game():
-			# 	self.stop_game()
 
 if __name__ == '__main__':
 	Screen(None).run()

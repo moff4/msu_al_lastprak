@@ -7,6 +7,8 @@ import conf
 class Basic_Missile:
 	def __init__(self,engine,x,y,power,angle):
 		self.engine = engine
+		self.__desctription = "Standart Missle"
+
 		self.speed_weight = conf.Missile_speed_weight
 		self.__Vx = power * math.cos(angle)
 		self.__Vy = power * math.sin(angle)
@@ -26,6 +28,12 @@ class Basic_Missile:
 	#########################
 	## ENGINE CONTROLL API ##
 	#########################
+	#
+	# return name of this misslie
+	#
+	def get_name(self):
+		return self.__desctription
+
 	#
 	# return position for this object
 	#

@@ -70,8 +70,9 @@ class User_Controller(controller.Controller):
 	#
 	def stop(self):
 		self.go = False
+		self.engine.stop()
 		try:
-			self.close()
+			self.conn.close()
 		except Exception as e:
 			pass
 
