@@ -74,9 +74,9 @@ class Engine:
 	# u know X, u can get Y
 	# u should create explosion funnel in (X,Y) with radius R
 	#
-	def blow_landscape(self,X,R):
+	def blow_landscape(self,X,Y,R):
 		if 0 <= X < conf.Game_window_width:
-			Y = self.__pixels[int(X)]
+		#	Y = self.__pixels[int(X)]
 			i = max(0,X-R)
 			while i < min((X+R),conf.Game_window_width):
 				origin = self.__pixels[int(i)]

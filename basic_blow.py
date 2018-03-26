@@ -42,7 +42,7 @@ class Basic_Blow:
 	# destroy itself and create extra blow or missle objects in case of need
 	#
 	def reroze(self,_timer=0):
-		self.engine.blow_landscape(self.__X,self.__max_r)
+		self.engine.blow_landscape(self.__X,self.__Y,self.__max_r)#self.engine.blow_landscape(self.__X,self.__max_r)
 		# damage smbd's tank
 		pass # normal
 
