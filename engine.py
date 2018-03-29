@@ -20,6 +20,7 @@ class Engine:
 		self.__internal_timer = 0 # count already drawen frames
 		self.__ap = [None,None] # left-right angle-power text ids
 		self.__scrid = [None,None] # left-right score text ids
+		self.__weapon = [None,None] # left-right weapon text ids
 		self.__left = draw_landscape
 		if draw_landscape:
 			self.__weights = self.__find_seed()
@@ -99,11 +100,15 @@ class Engine:
 		text1 = "%s° | %s%%"%(angle1,power1)
 		text2 = format(self.SCORE[0], '.2f')
 		text3 = format(self.SCORE[1], '.2f')
+		weapon0 = "Firecracker"#self.Tank[0].get_current_weapon_name()
+		weapon1 = "Whisperer"#self.Tank[1].get_current_weapon_name()
 		if self.__ap[0] == None and self.__ap[1] == None:
 			self.__ap[0] = self.__canvas.create_text(conf.Game_window_width / 10,conf.Game_window_height / 20,fill="blue",font="Arial 15 italic bold",text=text0)
 			self.__ap[1] = self.__canvas.create_text(conf.Game_window_width / 10 * 9,conf.Game_window_height / 20,fill="blue",font="Arial 15 italic bold",text=text1)
 			self.__scrid[0] = self.__canvas.create_text(conf.Game_window_width / 10,conf.Game_window_height / 10,fill="blue",font="Arial 15 italic bold",text=text2)
 			self.__scrid[1] = self.__canvas.create_text(conf.Game_window_width / 10 * 9,conf.Game_window_height / 10,fill="blue",font="Arial 15 italic bold",text=text3)
+			self.__weapon[0]=self.__canvas.create_text(conf.Game_window_width / 10,conf.Game_window_height / 7,fill="blue",font="Arial 15 italic bold",text=weapon0)
+			self.__weapon[1]=self.__canvas.create_text(conf.Game_window_width / 10 * 9,conf.Game_window_height / 7,fill="blue",font="Arial 15 italic bold",text=weapon1)			
 		else:
 			self.__canvas.itemconfig(self.__ap[0], text=text0)
 			self.__canvas.itemconfig(self.__ap[1], text=text1)
