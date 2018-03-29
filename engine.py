@@ -100,8 +100,8 @@ class Engine:
 		text1 = "%s° | %s%%"%(angle1,power1)
 		text2 = format(self.SCORE[0], '.2f')
 		text3 = format(self.SCORE[1], '.2f')
-		weapon0 = "Firecracker"#self.Tank[0].get_current_weapon_name()
-		weapon1 = "Whisperer"#self.Tank[1].get_current_weapon_name()
+		weapon0 = self.Tank[0].get_current_weapon_name() #Firecracker
+		weapon1 = self.Tank[1].get_current_weapon_name() #Whisperer
 		if self.__ap[0] == None and self.__ap[1] == None:
 			self.__ap[0] = self.__canvas.create_text(conf.Game_window_width / 10,conf.Game_window_height / 20,fill="blue",font="Arial 15 italic bold",text=text0)
 			self.__ap[1] = self.__canvas.create_text(conf.Game_window_width / 10 * 9,conf.Game_window_height / 20,fill="blue",font="Arial 15 italic bold",text=text1)

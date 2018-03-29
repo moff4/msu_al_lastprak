@@ -58,7 +58,7 @@ class Basic_Tank:
 	# return current weapon name
 	#
 	def get_current_weapon_name(self):
-		return self.__weapons[ self.__weapon_counter ].get_name()
+		return self.__weapons[ self.__weapon_counter ](engine=self.engine,power=self.__power,angle=self.__angle,x=self.__X,y=self.engine.get_pixel(self.__X)).get_name()
 
 	#
 	# return current tank's power
