@@ -114,7 +114,8 @@ class Engine:
 			self.__canvas.itemconfig(self.__ap[1], text=text1)
 			self.__canvas.itemconfig(self.__scrid[0], text=text2)
 			self.__canvas.itemconfig(self.__scrid[1], text=text3)
-
+			self.__canvas.itemconfig(self.__weapon[0], text=weapon0)
+			self.__canvas.itemconfig(self.__weapon[1], text=weapon1)		
 	#
 	# print on canvas, that game is over and smbd won or game is over
 	#	
