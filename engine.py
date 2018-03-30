@@ -87,7 +87,7 @@ class Engine:
 			for i in range (2):
 				try:
 					if self.Tank[i].near(X,Y):
-						#self.SCORE[1-i] += 100.0
+						self.SCORE[1-i] += 100.0
 						#print("i = ", i, "SCORE = ", self.SCORE[1-i])
 						pass
 				except Exception as e:
@@ -120,13 +120,16 @@ class Engine:
 	#
 	# print on canvas, that game is over and smbd won or game is over
 	#	
-	def print_end(self):		
+	def print_end(self):
 		if (self.SCORE[0] == self.SCORE[1]):
 			self.__canvas.create_text(conf.Game_window_width / 2,conf.Game_window_height / 10,fill="yellow",font="Times 50 italic bold",text="Draw")
 		elif (self.__left and self.SCORE[0] > self.SCORE[1] or not (self.__left or self.SCORE[0] > self.SCORE[1])):
 			self.__canvas.create_text(conf.Game_window_width / 2,conf.Game_window_height / 10,fill="green",font="Times 50 italic bold",text="You win")
 		else:
 			self.__canvas.create_text(conf.Game_window_width / 2,conf.Game_window_height / 10,fill="red",font="Times 50 italic bold",text="You lose")
+
+		# FIXME
+		time.sleep(5.0)
 
 	#
 	# return False if any user got score >= max score
