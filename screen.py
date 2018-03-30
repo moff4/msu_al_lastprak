@@ -165,7 +165,7 @@ class Screen:
 		if self.go:
 			self.root.after(self.fps_delay,self.draw_picture)
 			self.engine.single_draw()
-			if not self.engine.check_game() or not self.check_game():
+			if self.engine.check_game() or not self.check_game():
 				self.stop_game('just suka stop')
 
 	#

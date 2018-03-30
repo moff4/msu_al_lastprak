@@ -135,7 +135,7 @@ class Engine:
 	#
 	def check_game(self):
 		boo = self.SCORE[0] < self.MAX_SCORE and self.SCORE[1] < self.MAX_SCORE and self.__go
-		if boo:
+		if not boo:
 			self.print_end()
 		return boo
 
