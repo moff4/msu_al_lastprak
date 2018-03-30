@@ -78,9 +78,11 @@ class Screen:
 			self.draw_picture()
 			self.draw_landscape()
 			self.root.mainloop()
-			self.wait()
-			self.root.destroy()
 		except SystemExit:
+			pass
+		except BaseException:
+			pass
+		finally:
 			self.wait()
 			self.root.destroy()
 
@@ -150,7 +152,7 @@ class Screen:
 		except Exception as e:
 			print('stop-game: %s'%e)
 		time.sleep(5.0)
-		raise SystemExit('Must be!')
+		raise BaseException('Must be!')
 
 	#
 	# callback from timer to draw picture
