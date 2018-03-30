@@ -126,6 +126,21 @@ Misslie_main_color						=	"#0000FF"
 # color of the missile's trace (str as "#??????")
 Misslie_trace_color						=	"#FF0000"
 #------------------------------------------------------------------------------
+#                                Firecracker Misslie
+#------------------------------------------------------------------------------
+Firecracker_main_color					=	"yellow"
+Firecracker_desctription				=	"Firecracker"
+#------------------------------------------------------------------------------
+
+#                                Firecracker Misslie2
+#------------------------------------------------------------------------------
+Firecracker2_main_color					=	"green"
+Firecracker2_desctription				=	"Firecracker2"
+Firecracker2_Misslie_size				=	2
+Firecracker2_Missile_speed_weight		=	3 * conf.Missile_speed_weight
+#------------------------------------------------------------------------------
+
+
 #                                Basic Blow
 #------------------------------------------------------------------------------
 # max size of the blow in pixels (int)
