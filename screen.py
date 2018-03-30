@@ -135,16 +135,20 @@ class Screen:
 		self.go = False
 		try:
 			self.sock.stop()
-		except:
-			pass
+		except Exception as e:
+			print('stop-game: %s'%e)
 		try:
 			self.user.stop()
-		except:
-			pass
-		self.engine.clean()
-		#self.engine.clean_land()
-		self.engine.print_end()
-		self.wait()
+		except Exception as e:
+			print('stop-game: %s'%e)
+		try:
+			self.engine.print_end()
+		except Exception as e:
+			print('stop-game: %s'%e)
+		try:
+			self.wait()
+		except Exception as e:
+			print('stop-game: %s'%e)
 		time.sleep(5.0)
 		raise SystemExit('Must be!')
 

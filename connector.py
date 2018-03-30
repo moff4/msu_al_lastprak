@@ -118,6 +118,7 @@ class Connector:
 		except Exception as e:
 			print('Warning: read from socket: %s'%e)
 			msg = b''
+			raise SystemError
 		if msg == conf.PING_MSG:
 			self.__answer_ping()
 			return self.read_msg()
