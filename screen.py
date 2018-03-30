@@ -152,10 +152,6 @@ class Screen:
 			self.engine.print_end()
 		except Exception as e:
 			print('stop-game: %s'%e)
-		try:
-			self.wait()
-		except Exception as e:
-			print('stop-game: %s'%e)
 		time.sleep(5.0)
 		raise BaseException('Must be!')
 

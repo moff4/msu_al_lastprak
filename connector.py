@@ -124,7 +124,8 @@ class Connector:
 			return self.read_msg()
 		elif msg == conf.CLOSE_MSG:
 			self.close()
-			return None
+			#return None
+			raise SystemError('Game is over')
 		else:
 			return msg.decode()
 
