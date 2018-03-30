@@ -1,7 +1,7 @@
 #!/usr/bin/env python3.6
 
 from basic_blow import Basic_Blow
-import firecracker_missile
+import firecracker_missile2
 
 import math
 import conf
@@ -16,4 +16,4 @@ class Firecracker_Blow(Basic_Blow):
 		#
 		parts = 10
 		for i in range(parts):
-			engine.add_missile_or_blow(firecracker_missile.Firecracker_Missile2(engine,x,y,10,i * math.pi / parts))
+			engine.add_missile_or_blow(firecracker_missile2.Firecracker_Missile2(engine,x,y,10,i * math.pi / parts))
