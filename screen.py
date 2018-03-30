@@ -128,11 +128,13 @@ class Screen:
 
 	#
 	# return True if any of threads are dead
+	# if True => game is over
 	#
 	def check_game(self):
 		try:
-			boo = self.user_cntl.is_alive() and self.sock_cntl.is_alive()
+			boo = (not self.user_cntl.is_alive()) or (not self.sock_cntl.is_alive())
 			if boo:
+				print('screen:-:end')
 				self.print_end()
 			return boo
 		except:
@@ -156,24 +158,28 @@ class Screen:
 		except Exception as e:
 			print('stop-game: %s'%e)
 		time.sleep(5.0)
-		raise BaseException('Must be!')
+		raise SystemError('Must be!')
 
 	#
 	# callback from timer to draw picture
 	#
 	def draw_picture(self):
 		if self.go:
-			self.root.after(self.fps_delay,self.draw_picture)
 			self.engine.single_draw()
-			if self.engine.check_game() or not self.check_game():
+			if self.engine.check_game() or self.check_game():
 				self.stop_game('just suka stop')
+			else:
+				self.root.after(self.fps_delay,self.draw_picture)
 
 	#
 	# callback from timer to draw picture
 	#
 	def draw_landscape(self):
 		if self.go:
-			self.root.after(self.fps_landscape,self.draw_landscape)
+			if self.engine.check_game() or self.check_game():
+				self.stop_game('just suka stop')
+			else:
+				self.root.after(self.fps_landscape,self.draw_landscape)
 			self.engine.draw_landscape()
 
 if __name__ == '__main__':

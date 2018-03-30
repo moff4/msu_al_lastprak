@@ -131,11 +131,13 @@ class Engine:
 			self.__canvas.create_text(conf.Game_window_width / 2,conf.Game_window_height / 10,fill="red",font="Times 50 italic bold",text="You lose")
 
 	#
-	# return False if any user got score >= max score
+	# return True if any user got score >= max score
+	# if True => game is over
 	#
 	def check_game(self):
-		boo = self.SCORE[0] < self.MAX_SCORE and self.SCORE[1] < self.MAX_SCORE and self.__go
-		if not boo:
+		boo = (self.SCORE[0] >= self.MAX_SCORE) or (self.SCORE[1] >= self.MAX_SCORE) or (not self.__go)
+		if boo:
+			print('engine:-:end')
 			self.print_end()
 		return boo
 
