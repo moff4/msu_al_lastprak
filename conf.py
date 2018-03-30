@@ -137,7 +137,7 @@ Firecracker_desctription				=	"Firecracker"
 Firecracker2_main_color					=	"green"
 Firecracker2_desctription				=	"Firecracker2"
 Firecracker2_Misslie_size				=	2
-Firecracker2_Missile_speed_weight		=	3 * conf.Missile_speed_weight
+Firecracker2_Missile_speed_weight		=	3 * Missile_speed_weight
 #------------------------------------------------------------------------------
 
 
