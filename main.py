@@ -26,6 +26,8 @@ def main(args):
 			sc = Screen(conn,mode == 'server') # conn - connector.Connector()
 			try:
 				sc.run()
+			except BaseException:
+				pass
 			except SystemError:
 				pass
 

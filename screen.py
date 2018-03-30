@@ -131,7 +131,10 @@ class Screen:
 	#
 	def check_game(self):
 		try:
-			return self.user_cntl.is_alive() and self.sock_cntl.is_alive()
+			boo = self.user_cntl.is_alive() and self.sock_cntl.is_alive()
+			if boo:
+				self.print_end()
+			return boo
 		except:
 			return True
 
