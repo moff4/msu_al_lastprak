@@ -118,14 +118,14 @@ class Connector:
 		except Exception as e:
 			print('Warning: read from socket: %s'%e)
 			msg = b''
-			raise SystemError
+			#raise SystemError
 		if msg == conf.PING_MSG:
 			self.__answer_ping()
 			return self.read_msg()
 		elif msg == conf.CLOSE_MSG:
 			self.close()
-			#return None
-			raise SystemError('Game is over')
+			#raise SystemError('Game is over')
+			return None
 		else:
 			return msg.decode()
 
@@ -140,7 +140,7 @@ class Connector:
 			return True
 		except Exception as e:
 			print('Warning: send into socket: %s'%e)
-			raise SystemError('tak nado')
+			#raise SystemError('tak nado')
 			return False
 
 	#
