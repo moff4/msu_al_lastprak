@@ -77,14 +77,19 @@ class Screen:
 					time.sleep(0.5)
 			self.draw_picture()
 			self.draw_landscape()
+			print('loop-start')
 			self.root.mainloop()
+			print('loop-stop')
 		except SystemExit:
-			pass
+			print('loop-system')
 		except BaseException:
-			pass
+			print('loop-base')
 		finally:
+			print('loop-finally-start')
 			self.wait()
+			print('loop-finally-middle')
 			self.root.destroy()
+			print('loop-finally-stop')
 
 	#
 	# place tanks
@@ -131,7 +136,7 @@ class Screen:
 			return True
 
 	#
-	#
+	# instructions to stop the game
 	#
 	def stop_game(self,event):
 		self.go = False
