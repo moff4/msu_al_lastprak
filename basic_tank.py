@@ -5,6 +5,7 @@ import time
 import conf
 from basic_missile import Basic_Missile
 from firecracker_missile import Firecracker_Missile
+from firecracker_missile2 import Firecracker_Missile2
 from shotgun_missile import Shotgun_Missile
 
 class Basic_Tank:

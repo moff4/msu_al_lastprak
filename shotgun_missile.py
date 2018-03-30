@@ -5,13 +5,16 @@ from shotgun_blow import Shotgun_Blow
 
 import conf
 import math
-
+#
+# FIXME 
+# const must be in conf.py
+#
 def SetObject(self, desctription):
 	setattr(self, '_Basic_Missile__desctription', desctription)
 	setattr(self, '_Basic_Missile__main_color', "purple")
 	setattr(self, '_Basic_Missile__blow_class', Shotgun_Blow)	
 	setattr(self, '_Basic_Missile__size', 2)
-	self.speed_weight = 5 * conf.Missile_speed_weight
+	self.speed_weight = 5 * conf.Missile_speed_weight # FIXME
 	
 class Shotgun_Missile(Basic_Missile):
 	def __init__(self,engine,x,y,power,angle):			
