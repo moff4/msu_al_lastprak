@@ -70,8 +70,8 @@ class Basic_Missile:
 			return True
 		elif self.__Y <= self.engine.get_pixel(self.__X):
 			return True
-		elif self.engine.Tank[0].near(self.__X,self.__Y) or self.engine.Tank[1].near(self.__X,self.__Y):
-			return True
+		# elif self.engine.Tank[0].near(self.__X,self.__Y) or self.engine.Tank[1].near(self.__X,self.__Y):
+		# 	return True
 		else:
 			return self.__done
 	#

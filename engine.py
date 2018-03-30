@@ -88,7 +88,8 @@ class Engine:
 				try:
 					if self.Tank[i].near(X,Y):
 						#self.SCORE[1-i] += 100.0
-						print("i = ", i, "SCORE = ", self.SCORE[1-i])
+						#print("i = ", i, "SCORE = ", self.SCORE[1-i])
+						pass
 				except Exception as e:
 					print("Score add: %s"%e)
 	def print_current(self):
@@ -229,9 +230,12 @@ class Engine:
 
 		objs = []
 		for i in (self.Tank + self.__missiles_n_blows):
-			obj = i.draw()
-			x,y = i.getXY()
-			objs += self.__draw_obj(obj,x,y)
+			try:
+				obj = i.draw()
+				x,y = i.getXY()
+				objs += self.__draw_obj(obj,x,y)
+			except Exception as e:
+				print('Warning engine: %s'%(e))
 		self.__internal_timer += 1
 		self.__moveble_objects = objs
 
