@@ -158,12 +158,9 @@ class Basic_Tank:
 	#
 	def change_weapon(self,task):
 		if task == 'next':
-			self.__weapon_counter += 1
-			self.__weapon_counter %= len(self.__weapon_counter)
+			self.__weapon_counter = (self.__weapon_counter + 1) % len(self.__weapons)
 		else:
-			self.__weapon_counter -=1
-			if self.__weapon_counter < 0:
-				self.__weapon_counter += len(self.__weapons)
+			self.__weapon_counter = (self.__weapon_counter - 1 + len(self.__weapons)) % len(self.__weapons)
 
 	#
 	# FIRE!!!!!!!
