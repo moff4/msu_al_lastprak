@@ -145,6 +145,7 @@ class Screen:
 		#self.engine.clean_land()
 		self.engine.print_end()
 		self.wait()
+		time.sleep(5.0)
 		raise SystemExit('Must be!')
 
 	#

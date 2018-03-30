@@ -96,8 +96,10 @@ class Basic_Tank:
 	# return current position for this obj
 	#
 	def getXY(self):
-		#return self.__X,self.__Y
-		return int(self.__X),self.engine.get_pixel(self.__X)
+		self.__X = int(self.__X)
+		self.__Y = self.engine.get_pixel(self.__X)
+		return self.__X,self.__Y
+		#return int(self.__X),self.engine.get_pixel(self.__X)
 
 	#
 	# return dict with info how to draw this object
