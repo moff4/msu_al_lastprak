@@ -87,7 +87,7 @@ class Engine:
 			for i in range (2):
 				try:
 					if self.Tank[i].near(X,Y):
-						self.SCORE[1-i] += 100.0
+						#self.SCORE[1-i] += 100.0
 						print("i = ", i, "SCORE = ", self.SCORE[1-i])
 				except Exception as e:
 					print("Score add: %s"%e)
