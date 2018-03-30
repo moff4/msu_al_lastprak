@@ -149,6 +149,8 @@ Blow_width								=	3
 #------------------------------------------------------------------------------
 #                                Firecracker Blow
 #------------------------------------------------------------------------------
-
+FirecrackerBlow_desctription			=	"Firecracker Blow"
+FirecrackerBlow_SplinterSpeed			=	10
+FirecrackerBlow_SplinterAmount			=	10
 #------------------------------------------------------------------------------
 
