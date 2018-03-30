@@ -5,9 +5,10 @@ import time
 import conf
 from basic_missile import Basic_Missile
 from firecracker_missile import Firecracker_Missile
+from shotgun_missile import Shotgun_Missile
 
 class Basic_Tank:
-	def __init__(self,engine,x,y,power=50,angle=None,weapons=[Basic_Missile,Firecracker_Missile]):
+	def __init__(self,engine,x,y,power=50,angle=None,weapons=[Basic_Missile,Firecracker_Missile,Shotgun_Missile]):
 		self.engine = engine
 		self.__X = x
 		self.__Y = y
