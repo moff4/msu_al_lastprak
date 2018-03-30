@@ -24,7 +24,10 @@ def main(args):
 		if conn != None:
 			print('---%s---'%mode)
 			sc = Screen(conn,mode == 'server') # conn - connector.Connector()
-			sc.run()
+			try:
+				sc.run()
+			except SystemError:
+				pass
 
 	#
 	# to be continued ...

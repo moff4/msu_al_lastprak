@@ -138,6 +138,7 @@ class Connector:
 			return True
 		except Exception as e:
 			print('Warning: send into socket: %s'%e)
+			raise SystemError('tak nado')
 			return False
 
 	#
