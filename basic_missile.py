@@ -49,6 +49,8 @@ class Basic_Missile:
 			else:
 				return x
 		dx = (self.__Vx / float(conf.fps)) * self.speed_weight
+		if dx == 0.0:
+			dx = 0.0000001 # Nu a huli ?
 		dy = (self.__Vy / float(conf.fps)) * self.speed_weight / abs(dx)
 		sx = dx / abs(dx)
 		for i in range(int(abs(dx))):
