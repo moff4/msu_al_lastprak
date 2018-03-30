@@ -134,7 +134,10 @@ class Engine:
 	# return False if any user got score >= max score
 	#
 	def check_game(self):
-		return self.SCORE[0] < self.MAX_SCORE and self.SCORE[1] < self.MAX_SCORE and self.__go
+		boo = self.SCORE[0] < self.MAX_SCORE and self.SCORE[1] < self.MAX_SCORE and self.__go
+		if boo:
+			self.print_end()
+		return boo
 
 	#
 	# delete all moveble objects from canvas

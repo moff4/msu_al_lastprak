@@ -27,18 +27,21 @@ class Socket_Controller(controller.Controller):
 	# main loop # do all that should do
 	#
 	def loop(self):
-		while self.go:
-			try:
-				msg = self.conn.read_msg()
-				if msg != None:
-					msg = json.loads(msg)
-					if 'weights' in msg:
-						self.engine.set_weights(msg['weights'])
-					elif 'left_x' in msg:
-						self.engine.place_tanks(msg['left_x'],msg['right_x'])
+		try:
+			while self.go:
+				try:
+					msg = self.conn.read_msg()
+					if msg != None:
+						msg = json.loads(msg)
+						if 'weights' in msg:
+							self.engine.set_weights(msg['weights'])
+						elif 'left_x' in msg:
+							self.engine.place_tanks(msg['left_x'],msg['right_x'])
+						else:
+							self.run_command(msg)
 					else:
-						self.run_command(msg)
-				else:
-					self.go = False
-			except Exception as e:
-				print('Warning (sock-ctl): %s'%(e))
+						self.go = False
+				except Exception as e:
+					print('Warning (sock-ctl): %s'%(e))
+		except SystemError:
+			pass

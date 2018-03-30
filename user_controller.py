@@ -80,10 +80,13 @@ class User_Controller(controller.Controller):
 	# just loop
 	#
 	def loop(self):
-		keyboard.hook(self.press)
-		self.go = True
-		while self.go:
-			time.sleep(1)
+		try:
+			keyboard.hook(self.press)
+			self.go = True
+			while self.go:
+				time.sleep(1)
+		except SystemError:
+			pass
 
 
 
